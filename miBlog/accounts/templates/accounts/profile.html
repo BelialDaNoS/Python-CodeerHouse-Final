@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Perfil de {{ user.username }}{% endblock %}
+
+{% block content %}
+    <div class="profile-container">
+        <h1>Perfil de {{ user.username }}</h1>
+        <div class="profile-info">
+            {% if user.profile.image %}
+                <img src="{{ user.profile.image.url }}" alt="Imagen de perfil" class="profile-image">
+            {% endif %}
+            <p><strong>Nombre de Usuario:</strong> {{ user.username }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            {% if user.profile.description %}
+                <p><strong>Descripción:</strong> {{ user.profile.description }}</p>
+            {% endif %}
+            {% if user.profile.website %}
+                <p><strong>Sitio Web:</strong> <a href="{{ user.profile.website }}">{{ user.profile.website }}</a></p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+<style>
+    .profile-container {
+        width: 80%;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+    }
+
+    .profile-info {
+        margin-top: 20px;
+    }
+
+    .profile-image {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        border: 3px solid #333;
+        margin-bottom: 20px;
+    }
+
+    p {
+        font-size: 1.1em;
+        color: #333;
+    }
+
+    strong {
+        color: #000;
+    }
+</style>

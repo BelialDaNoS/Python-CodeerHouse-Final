@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ blog.title }}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> <!-- Asumiendo que tienes estilos CSS -->
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'about' %}">Acerca de Mi</a></li>
+                <li><a href="{% url 'blog_list' %}">Blogs</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'profile' %}">Perfil</a></li>
+                    <li><a href="{% url 'logout' %}">Cerrar Sesión</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Iniciar Sesión</a></li>
+                    <li><a href="{% url 'signup' %}">Registrarse</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        {% block content %}
+        <!-- El contenido específico de cada página irá aquí -->
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>© 2023 Lautaro Gazzo - Todos los Derechos Reservados</p>
+    </footer>
+
+    <script src="{% static 'js/main.js' %}"></script> <!-- Asumiendo que tienes archivos JavaScript -->
+</body>
+</html>
