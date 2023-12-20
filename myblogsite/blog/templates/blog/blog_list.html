@@ -1,0 +1,29 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lista de Blogs</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <h1>Lista de Blogs</h1>
+    <button id="toggleContentButton">Mostrar/Ocultar Blogs</button>
+
+    <!-- Lista de blogs dentro de un div para mostrar/ocultar -->
+    <div id="toggleContent">
+        <ul>
+            {% for blog in blogs %}
+                <li>
+                    <a href="{% url 'blog_detail' pk=blog.pk %}">{{ blog.title }}</a>
+                    - Escrito por {{ blog.author }}
+                </li>
+            {% empty %}
+                <li>No hay blogs aún.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

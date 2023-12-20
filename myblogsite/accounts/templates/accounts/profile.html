@@ -1,0 +1,23 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Perfil</title>
+    <link rel="stylesheet" href="{% static 'css/accounts_style.css' %}">
+</head>
+<body>
+    <h1>Perfil de {{ user.username }}</h1>
+    <button id="toggleInfoButton">Mostrar Información</button>
+    <div id="profileInfo" style="display: none;">
+        <!-- Información del perfil aquí -->
+    </div>
+    <p>Email: {{ user.email }}</p>
+    <p>Descripción: {{ user.description }}</p>
+    {% if user.profile_image %}
+        <img src="{{ user.profile_image.url }}" alt="Imagen de Perfil">
+    {% endif %}
+    <a href="{% url 'edit_profile' %}">Editar Perfil</a>
+    <script src="{% static 'js/accounts_script.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Editar Perfil</title>
+    <link rel="stylesheet" href="{% static 'css/accounts_style.css' %}">
+</head>
+<body>
+    <h1>Editar Perfil</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Actualizar Perfil</button>
+    </form>
+    <script src="{% static 'js/accounts_script.js' %}"></script>
+</body>
+</html>

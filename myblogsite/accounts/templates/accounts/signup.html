@@ -1,0 +1,18 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registro</title>
+    <link rel="stylesheet" href="{% static 'css/accounts_style.css' %}">
+</head>
+<body>
+    <h1>Registro</h1>
+    <form id="signupForm" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Registrarse</button>
+    </form>    
+    <script src="{% static 'js/accounts_script.js' %}"></script>
+</body>
+</html>
