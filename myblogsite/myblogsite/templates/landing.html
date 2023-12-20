@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Landing Page</title>
+    <!-- Añade aquí tus enlaces a CSS -->
+</head>
+<body>
+    <h1>Bienvenido a Nuestro Blog</h1>
+    {% if user.is_authenticated %}
+        <a href="{% url 'edit_profile' %}">Editar Perfil</a>
+        <a href="{% url 'logout' %}">Cerrar Sesión</a>
+    {% else %}
+        <a href="{% url 'login' %}">Iniciar Sesión</a>
+        <a href="{% url 'signup' %}">Registrarse</a>
+    {% endif %}
+
+    <!-- Mostrar los últimos blogs -->
+    {% if blogs %}
+        {% for blog in blogs %}
+            <h2>{{ blog.title }}</h2>
+            <p>{{ blog.body|truncatewords:30 }}</p>
+        {% endfor %}
+    {% else %}
+        <img src="{% static 'travolta-empty.gif' %}" alt="No hay blogs">
+    {% endif %}
+
+    <!-- Código para el pop-up de publicidad -->
+
+    <script src="{% static 'js/your_script.js' %}"></script>
+</body>
+</html>
