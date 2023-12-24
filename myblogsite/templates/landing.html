@@ -1,17 +1,41 @@
-<!-- "myblogsite\templates\landing.html" -->
 {% load static %}
-
 <!DOCTYPE html>
 <html>
 <head>
     <title>Landing Page</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        .no-blogs {
+            text-align: center;
+            margin-top: 100px; /* Ajusta este valor según sea necesario */
+        }
+
+        .user-avatar, .blog-avatar {
+            width: 50px; /* Ajusta el tamaño según sea necesario */
+            height: 50px;
+            border-radius: 50%;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+    </style>
 </head>
 <body>
     <header>
         <div class="container">
             {% if user.is_authenticated %}
-                <a href="{% url 'edit_profile' %}" class="header-button">Editar Perfil</a>
+                <span class="user-info">
+                {% if user.profile_image %}
+                    <img src="{{ user.profile_image.url }}" alt="Avatar" class="user-avatar">
+                {% else %}
+                    <img src="{% static '/avatars/default-avatar.png' %}" alt="Avatar" class="user-avatar">
+                    <br>
+                {% endif %}
+                {{ user.username }}
+                </span>
+                <a href="{% url 'profile' %}" class="header-button">Ver Perfil</a>
                 <a href="{% url 'logout' %}" class="header-button">Cerrar Sesión</a>
             {% else %}
                 <a href="{% url 'login' %}" class="header-button">Iniciar Sesión</a>
@@ -20,35 +44,43 @@
         </div>
     </header>
 
-    <div class="publish-blog-button-container">
-        {% if user.is_authenticated %}
-            <a href="{% url 'publish_blog' %}" id="publish-blog-button" class="header-button">Publicar blog</a>
-        {% else %}
-            <button id="publish-blog-button" class="header-button" onclick="showLoginModal()">Publicar blog</button>
-            <!-- Modal for non-authenticated users -->
-            <div id="login-modal" class="modal">
-                <div class="modal-content">
-                    <span class="close-button" onclick="closeModal()">&times;</span>
-                    <p>Debes estar logueado para publicar en el blog. Por favor, <a href="{% url 'login' %}">inicia sesión</a> o <a href="{% url 'signup' %}">regístrate</a>.</p>
-                </div>
-            </div>
-        {% endif %}
-    </div>
-       
+    <div class="blog-container">
         {% for blog in blogs %}
             <div class="blog-preview">
-                <h2>{{ blog.title }}</h2>
-                <p>{{ blog.body|truncatewords:30 }}</p>
+                <img src="{{ blog.author.profile.avatar.url }}" alt="Avatar" class="blog-avatar">
+                <div class="blog-info">
+                    <h2>{{ blog.title }}</h2>
+                    <p><strong>Autor:</strong> {{ blog.author.username }}</p>
+                    <p><strong>Categoría:</strong> {{ blog.category }}</p>
+                    <p>{{ blog.content }}</p>
+                </div>
             </div>
+            <hr>
         {% empty %}
-            <img src="{% static 'travolta-empty.gif' %}" alt="No hay blogs disponibles">
+            <div class="no-blogs" style="text-align: center;">
+                <img src="{% static 'travolta-empty.gif' %}" alt="No hay blogs disponibles">
+                <p>No hay blogs aún. Sé el primero!</p>
+            </div>
         {% endfor %}
+
+        <div style="text-align: center;">
+            {% if user.is_authenticated %}
+                <a href="{% url 'publish_blog' %}" id="publish-blog-button" class="header-button">Publicar blog</a>
+            {% else %}
+                <button id="publish-blog-button" class="header-button" onclick="showLoginModal()">Publicar blog</button>
+                <div id="login-modal" class="modal" style="display: none;">
+                    <p>Debes estar logueado para publicar en el blog. Por favor, <a href="{% url 'login' %}">inicia sesión</a> o <a href="{% url 'signup' %}">regístrate</a>.</p>
+                </div>
+            {% endif %}
+        </div>
     </div>
 
-    <footer>
-        <p>&copy; 2023 Tu Blog. Todos los derechos reservados.</p>
-    </footer>
-
     <script src="{% static 'js/your_script.js' %}"></script>
+    <script>
+        function showLoginModal() {
+            var modal = document.getElementById('login-modal');
+            modal.style.display = 'block';
+        }
+    </script>
 </body>
 </html>

@@ -8,17 +8,13 @@
     <link rel="stylesheet" href="{% static 'css/accounts_style.css' %}">
 </head>
 <body>
-    <h1>Perfil de {{ user.username }}</h1>
-    <button id="toggleInfoButton">Mostrar Información</button>
-    <div id="profileInfo" style="display: none;">
-        <!-- Información del perfil aquí -->
-    </div>
-    <p>Email: {{ user.email }}</p>
-    <p>Descripción: {{ user.description }}</p>
-    {% if user.profile_image %}
-        <img src="{{ user.profile_image.url }}" alt="Imagen de Perfil">
-    {% endif %}
-    <a href="{% url 'edit_profile' %}">Editar Perfil</a>
-    <script src="{% static 'js/accounts_script.js' %}"></script>
+<!-- Cambio en profile.html -->
+<h1>Perfil de {{ user.username }}</h1>
+{% if user.profile_image %}
+    <img src="{{ user.profile_image.url }}" alt="Imagen de Perfil">
+{% endif %}
+<p>Email: {{ user.email }}</p>
+<p>Descripción: {{ user.description }}</p>
+<a href="{% url 'edit_profile' %}">Editar Perfil</a>
 </body>
 </html>
