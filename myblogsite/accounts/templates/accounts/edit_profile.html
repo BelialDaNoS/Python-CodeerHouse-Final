@@ -27,21 +27,43 @@
         </div>
 
         <div class="avatar-selection">
-            <label for="avatar1"><img src="{% static 'avatars/avatar1.png' %}" alt="Avatar 1"></label>
-            <input type="radio" name="avatar" id="avatar1" value="avatar1" {% if user.profile_image.url == '/avatars/avatar1.png' %}checked{% endif %}>
+            {% if user.profile_image %}
+                {% with user.profile_image.url as current_avatar %}
+                    <label for="avatar1"><img src="{% static 'avatars/avatar1.png' %}" alt="Avatar 1"></label>
+                    <input type="radio" name="avatar" id="avatar1" value="avatar1" {% if current_avatar == '/avatars/avatar1.png' %}checked{% endif %}>
+            
+                    <label for="avatar2"><img src="{% static 'avatars/avatar2.png' %}" alt="Avatar 2"></label>
+                    <input type="radio" name="avatar" id="avatar2" value="avatar2" {% if current_avatar == '/avatars/avatar2.png' %}checked{% endif %}>
+            
+                    <label for="avatar3"><img src="{% static 'avatars/avatar3.png' %}" alt="Avatar 3"></label>
+                    <input type="radio" name="avatar" id="avatar3" value="avatar3" {% if current_avatar == '/avatars/avatar3.png' %}checked{% endif %}>
+            
+                    <label for="avatar4"><img src="{% static 'avatars/avatar4.png' %}" alt="Avatar 4"></label>
+                    <input type="radio" name="avatar" id="avatar4" value="avatar4" {% if current_avatar == '/avatars/avatar4.png' %}checked{% endif %}>
+            
+                    <label for="default-avatar"><img src="{% static 'avatars/default-avatar.png' %}" alt="default-avatar"></label>
+                    <input type="radio" name="avatar" id="default-avatar" value="default-avatar" {% if current_avatar == '/avatars/default-avatar.png' %}checked{% endif %}>
+                {% endwith %}
+            {% else %}
+                {% with '/avatars/default-avatar.png' as current_avatar %}
+                <label for="avatar1"><img src="{% static 'avatars/avatar1.png' %}" alt="Avatar 1"></label>
+                <input type="radio" name="avatar" id="avatar1" value="avatar1" {% if current_avatar == '/avatars/avatar1.png' %}checked{% endif %}>
         
-            <label for="avatar2"><img src="{% static 'avatars/avatar2.png' %}" alt="Avatar 2"></label>
-            <input type="radio" name="avatar" id="avatar2" value="avatar2" {% if user.profile_image.url == '/avatars/avatar2.png' %}checked{% endif %}>
+                <label for="avatar2"><img src="{% static 'avatars/avatar2.png' %}" alt="Avatar 2"></label>
+                <input type="radio" name="avatar" id="avatar2" value="avatar2" {% if current_avatar == '/avatars/avatar2.png' %}checked{% endif %}>
         
-            <label for="avatar3"><img src="{% static 'avatars/avatar3.png' %}" alt="Avatar 3"></label>
-            <input type="radio" name="avatar" id="avatar3" value="avatar3" {% if user.profile_image.url == '/avatars/avatar3.png' %}checked{% endif %}>
+                <label for="avatar3"><img src="{% static 'avatars/avatar3.png' %}" alt="Avatar 3"></label>
+                <input type="radio" name="avatar" id="avatar3" value="avatar3" {% if current_avatar == '/avatars/avatar3.png' %}checked{% endif %}>
         
-            <label for="avatar4"><img src="{% static 'avatars/avatar4.png' %}" alt="Avatar 4"></label>
-            <input type="radio" name="avatar" id="avatar4" value="avatar4" {% if user.profile_image.url == '/avatars/avatar4.png' %}checked{% endif %}>
+                <label for="avatar4"><img src="{% static 'avatars/avatar4.png' %}" alt="Avatar 4"></label>
+                <input type="radio" name="avatar" id="avatar4" value="avatar4" {% if current_avatar == '/avatars/avatar4.png' %}checked{% endif %}>
         
-            <label for="default-avatar"><img src="{% static 'avatars/default-avatar.png' %}" alt="default-avatar"></label>
-            <input type="radio" name="avatar" id="default" value="default-avatar" {% if user.profile_image.url == '/avatars/default-avatar.png' %}checked{% endif %}>
+                <label for="default-avatar"><img src="{% static 'avatars/default-avatar.png' %}" alt="default-avatar"></label>
+                <input type="radio" name="avatar" id="default-avatar" value="default-avatar" {% if current_avatar == '/avatars/default-avatar.png' %}checked{% endif %}>
+                {% endwith %}
+            {% endif %}
         </div>
+        
                
         
 
