@@ -27,17 +27,24 @@
         </div>
 
         <div class="avatar-selection">
-            {% for i in "1234" %}
-                <label for="avatar{{ i }}">
-                    <img src="{% static 'avatars/avatar' | add:i | add:'.png' %}" alt="Avatar {{ i }}">
-                </label>
-                <input type="radio" name="avatar" id="avatar{{ i }}" value="avatar{{ i }}" {% if user.profile_image.url == '/avatars/avatar' | add:i | add:'.png' %}checked{% endif %}>
-            {% endfor %}
+            <label for="avatar1"><img src="{% static 'avatars/avatar1.png' %}" alt="Avatar 1"></label>
+            <input type="radio" name="avatar" id="avatar1" value="avatar1" {% if user.profile_image.url == '/avatars/avatar1.png' %}checked{% endif %}>
+        
+            <label for="avatar2"><img src="{% static 'avatars/avatar2.png' %}" alt="Avatar 2"></label>
+            <input type="radio" name="avatar" id="avatar2" value="avatar2" {% if user.profile_image.url == '/avatars/avatar2.png' %}checked{% endif %}>
+        
+            <label for="avatar3"><img src="{% static 'avatars/avatar3.png' %}" alt="Avatar 3"></label>
+            <input type="radio" name="avatar" id="avatar3" value="avatar3" {% if user.profile_image.url == '/avatars/avatar3.png' %}checked{% endif %}>
+        
+            <label for="avatar4"><img src="{% static 'avatars/avatar4.png' %}" alt="Avatar 4"></label>
+            <input type="radio" name="avatar" id="avatar4" value="avatar4" {% if user.profile_image.url == '/avatars/avatar4.png' %}checked{% endif %}>
+        
             <label for="default-avatar"><img src="{% static 'avatars/default-avatar.png' %}" alt="default-avatar"></label>
             <input type="radio" name="avatar" id="default" value="default-avatar" {% if user.profile_image.url == '/avatars/default-avatar.png' %}checked{% endif %}>
         </div>
+               
         
-        
+
         <button type="submit" name="action" value="update_avatar">Actualizar Avatar</button>
 
         <!-- Actualizar Descripción -->
