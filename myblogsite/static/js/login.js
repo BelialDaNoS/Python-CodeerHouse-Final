@@ -21,20 +21,3 @@ $(document).ready(function() {
     });
 });
 
-$.ajax({
-    type: "POST",
-    url: "/accounts/ajax_login/",
-    data: {
-        username: $('#username').val(),
-        password: $('#password').val(),
-    },
-    beforeSend: function(xhr) {
-        xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-    },
-    success: function(data) {
-        // ...
-    },
-    error: function(xhr, status, error) {
-        // ...
-    }
-});

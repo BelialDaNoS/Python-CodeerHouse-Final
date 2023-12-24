@@ -1,18 +1,50 @@
 {% load static %}
+{% load i18n %}
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Editar Perfil</title>
+    <title>{% trans "Editar Perfil" %}</title>
     <link rel="stylesheet" href="{% static 'css/accounts_style.css' %}">
 </head>
 <body>
-    <h1>Editar Perfil</h1>
-    <form method="post" enctype="multipart/form-data">
+    <h1>{% trans "Editar Perfil" %}</h1>
+    <form method="post" enctype="multipart/form-data" id="profileForm">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Actualizar Perfil</button>
+        {% for field in form %}
+            {% if field.name != 'profile_avatar' %}
+                <p>
+                    {{ field.label_tag }}<br>
+                    {{ field }}
+                    {% if field.help_text %}
+                        <small style="color: grey">{{ field.help_text }}</small>
+                    {% endif %}
+                    {% for error in field.errors %}
+                        <p style="color: red">{{ error }}</p>
+                    {% endfor %}
+                </p>
+            {% endif %}
+        {% endfor %}
+
+        <div class="avatar-selection">
+            {% for radio in form.profile_avatar %}
+                <label for="{{ radio.id_for_label }}">
+                    {{ radio.choice_label }}
+                    {{ radio.tag }}
+                </label>
+            {% endfor %}
+        </div>
+
+        <button type="submit">{% trans "Actualizar Perfil" %}</button>
     </form>
+
+    <h2>{% trans "Cambiar Contraseña" %}</h2>
+    <form method="post" action="{% url 'change_password' %}" id="passwordForm">
+        {% csrf_token %}
+        {{ password_form.as_p }}
+        <button type="submit">{% trans "Cambiar Contraseña" %}</button>
+    </form>
+
     <script src="{% static 'js/accounts_script.js' %}"></script>
 </body>
 </html>

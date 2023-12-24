@@ -28,3 +28,26 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+
+document.getElementById("id_username").addEventListener("keyup", function() {
+    var username = this.value;
+    
+    if (username.length === 20) {
+        alert('Has alcanzado el máximo de 20 caracteres.');
+    }
+
+    $.ajax({
+        url: "{% url 'check_username' %}",
+        data: {
+            'username': username
+        },
+        dataType: 'json',
+        success: function (data) {
+            if (data.is_taken) {
+                alert('El nombre de usuario ya existe.');
+            }
+        }
+    });
+});
+

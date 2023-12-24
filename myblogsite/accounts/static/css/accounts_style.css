@@ -27,3 +27,34 @@ img {
     max-width: 200px;
     height: auto;
 }
+
+/* Añadir a tu style.css */
+.avatar-selection {
+    margin-bottom: 20px;
+}
+
+.avatar-option {
+    display: inline-block;
+    margin-right: 10px;
+    text-align: center;
+}
+
+.avatar-image {
+    height: 50px; /* Ajustar según el tamaño deseado */
+    width: 50px;
+    border-radius: 50%; /* Opcional: para hacer los avatares circulares */
+    border: 2px solid #ddd;
+    margin-top: 5px;
+}
+
+.avatar-option input[type="radio"] {
+    display: none;
+}
+
+.avatar-option input[type="radio"] + img {
+    cursor: pointer;
+}
+
+.avatar-option input[type="radio"]:checked + img {
+    border-color: #0069d9; /* Resalta el avatar seleccionado */
+}
