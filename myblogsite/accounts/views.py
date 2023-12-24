@@ -67,6 +67,7 @@ def edit_profile(request):
             if user_form.is_valid():
                 user_form.save()
                 messages.success(request, "Avatar actualizado.")
+                return redirect('profile')  # Redirigir a la página de perfil
 
         if 'update_description' in request.POST:
             if user_form.is_valid():
@@ -89,4 +90,4 @@ def edit_profile(request):
     else:
         user_form = CustomUserChangeForm(instance=request.user)
         password_form = CustomPasswordChangeForm(user=request.user)
-        return render(request, 'accounts/edit_profile.html', {'user_form': user_form, 'password_form': password_form})
+        return render(request, 'accounts/edit_profile.html', {'user_form': user_form})
