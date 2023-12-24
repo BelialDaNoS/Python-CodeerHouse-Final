@@ -1,3 +1,4 @@
+// "myblogsite\accounts\static\js\accounts_script.js"
 document.addEventListener('DOMContentLoaded', function() {
     console.log("Cargada la página de cuentas");
 

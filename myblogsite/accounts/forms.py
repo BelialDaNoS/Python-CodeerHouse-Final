@@ -1,7 +1,14 @@
+#"myblogsite\accounts\forms.py"
 from django import forms
 from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm, UserCreationForm
 from django.utils.translation import gettext_lazy as _
 from .models import CustomUser
+from django.core.exceptions import ValidationError
+
+class CustomUserCreationForm(UserCreationForm):
+    class Meta(UserCreationForm.Meta):
+        model = CustomUser
+        fields = ('username', 'email')  # Add any other fields you need
 
 class CustomUserChangeForm(UserChangeForm):
     username = forms.CharField(
@@ -27,7 +34,12 @@ class CustomUserChangeForm(UserChangeForm):
         model = CustomUser
         fields = ['username', 'email', 'description', 'website', 'profile_avatar']
 
+
 class CustomPasswordChangeForm(PasswordChangeForm):
-    old_password = forms.CharField(label=_("Contraseña actual"), widget=forms.PasswordInput)
-    new_password1 = forms.CharField(label=_("Nueva contraseña"), widget=forms.PasswordInput)
-    new_password2 = forms.CharField(label=_("Confirme nueva contraseña"), widget=forms.PasswordInput)
+    def clean_new_password1(self):
+        old_password = self.cleaned_data.get('old_password')
+        new_password1 = self.cleaned_data.get('new_password1')
+        if old_password and new_password1:
+            if old_password == new_password1:
+                raise ValidationError(_("La nueva contraseña no puede ser la misma que la anterior."))
+        return new_password1

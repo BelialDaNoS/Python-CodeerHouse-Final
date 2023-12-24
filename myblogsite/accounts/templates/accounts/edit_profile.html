@@ -1,50 +1,31 @@
+<!-- "myblogsite\accounts\templates\accounts\edit_profile.html" -->
 {% load static %}
 {% load i18n %}
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{% trans "Editar Perfil" %}</title>
+    <title>Editar Perfil</title>
     <link rel="stylesheet" href="{% static 'css/accounts_style.css' %}">
 </head>
 <body>
-    <h1>{% trans "Editar Perfil" %}</h1>
+    <h1>Editar Perfil</h1>
     <form method="post" enctype="multipart/form-data" id="profileForm">
         {% csrf_token %}
-        {% for field in form %}
-            {% if field.name != 'profile_avatar' %}
-                <p>
-                    {{ field.label_tag }}<br>
-                    {{ field }}
-                    {% if field.help_text %}
-                        <small style="color: grey">{{ field.help_text }}</small>
-                    {% endif %}
-                    {% for error in field.errors %}
-                        <p style="color: red">{{ error }}</p>
-                    {% endfor %}
-                </p>
-            {% endif %}
-        {% endfor %}
-
-        <div class="avatar-selection">
-            {% for radio in form.profile_avatar %}
-                <label for="{{ radio.id_for_label }}">
-                    {{ radio.choice_label }}
-                    {{ radio.tag }}
-                </label>
-            {% endfor %}
-        </div>
-
-        <button type="submit">{% trans "Actualizar Perfil" %}</button>
-    </form>
-
-    <h2>{% trans "Cambiar Contraseña" %}</h2>
-    <form method="post" action="{% url 'change_password' %}" id="passwordForm">
-        {% csrf_token %}
+        <!-- Campos del formulario existentes -->
         {{ password_form.as_p }}
-        <button type="submit">{% trans "Cambiar Contraseña" %}</button>
+        <div class="avatar-selection">
+            <label for="avatar1"><img src="{% static '/avatars/avatar1.png' %}" alt="Avatar 1"></label>
+            <input type="radio" name="avatar" id="avatar1" value="avatar1">
+            <label for="avatar2"><img src="{% static '/avatars/avatar2.png' %}" alt="Avatar 2"></label>
+            <input type="radio" name="avatar" id="avatar2" value="avatar2">
+            <label for="avatar2"><img src="{% static '/avatars/avatar3.png' %}" alt="Avatar 3"></label>
+            <input type="radio" name="avatar" id="avatar3" value="avatar3">
+            <label for="avatar2"><img src="{% static '/avatars/avatar4.png' %}" alt="Avatar 4"></label>
+            <input type="radio" name="avatar" id="avatar4" value="avatar4">
+        </div>
+        <button type="submit">Guardar cambios</button>
     </form>
-
-    <script src="{% static 'js/accounts_script.js' %}"></script>
+    <script src="{% static 'js/edit_profile_script.js' %}"></script>
 </body>
 </html>

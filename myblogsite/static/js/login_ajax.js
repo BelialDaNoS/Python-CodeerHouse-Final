@@ -1,3 +1,4 @@
+//"myblogsite\static\js\login_ajax.js"
 $(document).ready(function() {
     $('#loginButton').click(function() {
         var username = $('[name="username"]').val();
