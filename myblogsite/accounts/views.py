@@ -42,13 +42,51 @@ def profile(request):
 @login_required
 def edit_profile(request):
     if request.method == 'POST':
+        user_form = CustomUserChangeForm(request.POST, request.FILES, instance=request.user)
         password_form = CustomPasswordChangeForm(user=request.user, data=request.POST)
-        if password_form.is_valid():
-            password_form.save()
-            update_session_auth_hash(request, password_form.user)
-            messages.success(request, "Contraseña cambiada exitosamente. Por favor, inicie sesión nuevamente.")
-            logout(request)
-            return redirect('/')
+
+        if 'update_username' in request.POST:
+            new_username = request.POST.get('username')
+            if User.objects.filter(username=new_username).exists():
+                messages.error(request, "El nombre de usuario ya está en uso.")
+            else:
+                request.user.username = new_username
+                request.user.save()
+                messages.success(request, "Nombre de usuario actualizado.")
+
+        if 'update_email' in request.POST:
+            new_email = request.POST.get('email')
+            if User.objects.filter(email=new_email).exists():
+                messages.error(request, "El email ya está en uso.")
+            else:
+                request.user.email = new_email
+                request.user.save()
+                messages.success(request, "Email actualizado.")
+
+        if 'update_avatar' in request.POST:
+            if user_form.is_valid():
+                user_form.save()
+                messages.success(request, "Avatar actualizado.")
+
+        if 'update_description' in request.POST:
+            if user_form.is_valid():
+                user_form.save()
+                messages.success(request, "Descripción actualizada.")
+
+        if 'update_password' in request.POST:
+            if password_form.is_valid():
+                password_form.save()
+                messages.success(request, "Contraseña actualizada.")
+
+        if 'update_all' in request.POST:
+            if user_form.is_valid() and password_form.is_valid():
+                user_form.save()
+                password_form.save()
+                messages.success(request, "Todos los cambios guardados.")
+
+        return redirect('profile')
+
     else:
+        user_form = CustomUserChangeForm(instance=request.user)
         password_form = CustomPasswordChangeForm(user=request.user)
-    return render(request, 'accounts/edit_profile.html', {'password_form': password_form})
+        return render(request, 'accounts/edit_profile.html', {'user_form': user_form, 'password_form': password_form})
