@@ -12,7 +12,6 @@
     <h1>Editar Perfil</h1>
     <form method="post" enctype="multipart/form-data" id="profileForm">
         {% csrf_token %}
-        <!-- Campos del formulario existentes -->
         {{ password_form.as_p }}
         <div class="avatar-selection">
             <label for="avatar1"><img src="{% static '/avatars/avatar1.png' %}" alt="Avatar 1"></label>

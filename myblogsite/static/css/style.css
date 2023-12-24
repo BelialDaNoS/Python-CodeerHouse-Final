@@ -1,4 +1,4 @@
-/* Reset básico */
+/* "myblogsite\static\css\style.css" */
 * {
     margin: 0;
     padding: 0;
@@ -147,3 +147,22 @@ footer p {
     display: block;
     margin-top: 15px;
 }
+
+.publish-blog-button-container {
+    margin: 20px 0;
+    text-align: center;
+}
+
+#publish-blog-button {
+    background-color: #ff4757; /* Red color similar to the main action buttons */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+#publish-blog-button:hover {
+    background-color: #e04050; /* Darker shade for hover effect */
+}
+
