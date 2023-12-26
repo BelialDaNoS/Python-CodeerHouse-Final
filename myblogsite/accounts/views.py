@@ -69,6 +69,7 @@ def edit_profile(request):
                 messages.success(request, "Avatar actualizado.")
                 return redirect('profile')  # Redirigir a la página de perfil
 
+
         if 'update_description' in request.POST:
             if user_form.is_valid():
                 user_form.save()
