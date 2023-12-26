@@ -9,10 +9,14 @@
 </head>
 <body>
 <!-- Cambio en profile.html -->
-<h1>Perfil de {{ user.username }}</h1>
-{% if user.profile_image %}
-    <img src="{{ user.profile_image.url }}" alt="Imagen de Perfil">
-{% endif %}
+<div>
+    <h2>Perfil de {{ user.username }}</h2>
+    {% if user.profile_image %}
+        <img src="{{ user.profile_image.url }}" alt="Avatar de {{ user.username }}">
+    {% else %}
+        <p>No hay avatar cargado.</p>
+    {% endif %}
+</div>
 <p>Email: {{ user.email }}</p>
 <p>Descripción: {{ user.description }}</p>
 <a href="{% url 'edit_profile' %}">Editar Perfil</a>

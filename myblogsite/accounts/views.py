@@ -67,8 +67,8 @@ def edit_profile(request):
             if user_form.is_valid():
                 user_form.save()
                 messages.success(request, "Avatar actualizado.")
-                return redirect('profile')  # Redirigir a la página de perfil
-
+                print(f"Nuevo avatar: {request.user.profile_image}")  # Mensaje de depuración
+                return redirect('profile')  # O 'landing' según tu preferencia 
 
         if 'update_description' in request.POST:
             if user_form.is_valid():
