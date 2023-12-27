@@ -1,5 +1,6 @@
 <!-- "myblogsite/accounts/templates/accounts/signup.html" -->
 {% load static %}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,11 +9,9 @@
 </head>
 <body>
     <h1>Registro</h1>
-    <form id="signupForm" method="post" enctype="multipart/form-data">
+    <form id="signupForm" method="post">
         {% csrf_token %}
-        {{ form.username.as_p }}
-        {{ form.email.as_p }}
-        <label>Avatar:</label>
+        {{ form.as_p }}
         <div class="avatar-selection">
             {% for choice in form.avatar.field.choices %}
                 <label>
@@ -22,7 +21,7 @@
             {% endfor %}
         </div>
         <button type="submit">Registrarse</button>
-    </form>
+    </form>    
     <script src="{% static 'js/accounts_script.js' %}"></script>
 </body>
 </html>

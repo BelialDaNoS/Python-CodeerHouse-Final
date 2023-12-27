@@ -65,12 +65,12 @@
             {% endif %}
         </div>
          -->
-         
-         <div class="avatar-selection">
-            {% for choice in form.avatar.field.choices %}
+
+        <div class="avatar-selection">
+            {% for choice in user_form.avatar.field.choices %}
                 <label>
                     <img src="{% static choice.0 %}" alt="{{ choice.1 }}">
-                    <input type="radio" name="avatar" value="{{ choice.0 }}">
+                    <input type="radio" name="avatar" value="{{ choice.0 }}" {% if user.avatar == choice.0 %}checked{% endif %}>
                 </label>
             {% endfor %}
         </div>
