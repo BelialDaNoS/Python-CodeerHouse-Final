@@ -6,9 +6,17 @@ from .models import CustomUser
 from django.core.exceptions import ValidationError
 
 class CustomUserCreationForm(UserCreationForm):
+    AVATAR_CHOICES = [
+        ('avatars/avatar1.png', _('Avatar') + ' 1'),
+        ('avatars/avatar2.png', _('Avatar') + ' 2'),
+        ('avatars/avatar3.png', _('Avatar') + ' 3'),
+        ('avatars/avatar4.png', _('Avatar') + ' 4'),
+    ]
+    profile_image = forms.ChoiceField(choices=AVATAR_CHOICES, label=_("Avatar"), widget=forms.RadioSelect)
+
     class Meta(UserCreationForm.Meta):
         model = CustomUser
-        fields = ('username', 'email')  # Add any other fields you need
+        fields = ('username', 'email', 'profile_image')
 
 class CustomUserChangeForm(UserChangeForm):
     username = forms.CharField(
