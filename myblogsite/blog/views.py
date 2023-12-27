@@ -21,7 +21,7 @@ def blog_create(request):
             blog = form.save(commit=False)
             blog.author = request.user
             blog.save()
-            return redirect('blog_detail', pk=blog.pk)
+            return redirect('blog_detail', pk=blog.pk) 
     else:
         form = BlogForm()
     return render(request, 'blog/blog_edit.html', {'form': form})

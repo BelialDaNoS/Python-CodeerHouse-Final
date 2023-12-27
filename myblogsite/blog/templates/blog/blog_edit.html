@@ -1,18 +1,24 @@
-<!-- "myblogsite\blog\templates\blog\blog_list.html" -->
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Editar Blog</title>
+    <title>Publicar Blog</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <h1>Editar Blog</h1>
+    <h1>Publicar Blog</h1>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Guardar</button>
+        <button type="submit">Publicar</button>
     </form>
     <a href="{% url 'blog_list' %}">Cancelar</a>
     <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>
+
+
+        </form>
+    </div>
+    <script src="{% static 'js/your_script.js' %}"></script>
 </body>
 </html>

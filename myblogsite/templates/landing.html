@@ -47,32 +47,33 @@
     <div class="blog-container">
         {% for blog in blogs %}
             <div class="blog-preview">
-                <img src="{{ blog.author.profile.avatar.url }}" alt="Avatar" class="blog-avatar">
+                <img src="{{ blog.author.profile_image.url }}" alt="Avatar" class="user-avatar">
                 <div class="blog-info">
                     <h2>{{ blog.title }}</h2>
-                    <p><strong>Autor:</strong> {{ blog.author.username }}</p>
-                    <p><strong>Categoría:</strong> {{ blog.category }}</p>
-                    <p>{{ blog.content }}</p>
+                    <button onclick="toggleContent('content-{{ blog.id }}')">Ver Contenido</button>
+                    <div id="content-{{ blog.id }}" style="display:none;">
+                        <p>{{ blog.content }}</p>
+                    </div>
                 </div>
             </div>
             <hr>
         {% empty %}
-            <div class="no-blogs" style="text-align: center;">
+            <div class="no-blogs">
                 <img src="{% static 'travolta-empty.gif' %}" alt="No hay blogs disponibles">
-                <p>No hay blogs aún. Sé el primero!</p>
+                <p>No hay blogs aún. ¡Sé el primero!</p>
             </div>
         {% endfor %}
+    </div>
 
-        <div style="text-align: center;">
-            {% if user.is_authenticated %}
-                <a href="{% url 'publish_blog' %}" id="publish-blog-button" class="header-button">Publicar blog</a>
-            {% else %}
-                <button id="publish-blog-button" class="header-button" onclick="showLoginModal()">Publicar blog</button>
-                <div id="login-modal" class="modal" style="display: none;">
-                    <p>Debes estar logueado para publicar en el blog. Por favor, <a href="{% url 'login' %}">inicia sesión</a> o <a href="{% url 'signup' %}">regístrate</a>.</p>
-                </div>
-            {% endif %}
-        </div>
+    <div style="text-align: center;">
+        {% if user.is_authenticated %}
+            <a href="{% url 'publish_blog' %}" id="publish-blog-button" class="header-button">Publicar blog</a>
+        {% else %}
+            <button id="publish-blog-button" class="header-button" onclick="showLoginModal()">Publicar blog</button>
+            <div id="login-modal" class="modal" style="display: none;">
+                <p>Debes estar logueado para publicar en el blog. Por favor, <a href="{% url 'login' %}">inicia sesión</a> o <a href="{% url 'signup' %}">regístrate</a>.</p>
+            </div>
+        {% endif %}
     </div>
 
     <script src="{% static 'js/your_script.js' %}"></script>
@@ -81,6 +82,12 @@
             var modal = document.getElementById('login-modal');
             modal.style.display = 'block';
         }
+        
+        function toggleContent(id) {
+            var content = document.getElementById(id);
+            content.style.display = content.style.display === 'none' ? 'block' : 'none';
+        }
     </script>
+
 </body>
 </html>
