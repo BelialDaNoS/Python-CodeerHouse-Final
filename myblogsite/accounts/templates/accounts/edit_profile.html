@@ -1,3 +1,4 @@
+<!-- "myblogsite/accounts/templates/accounts/edit_profile.html" -->
 {% load static %}
 {% load i18n %}
 
@@ -6,25 +7,23 @@
 <head>
     <title>Editar Perfil</title>
     <link rel="stylesheet" href="{% static 'css/accounts_style.css' %}">
+    <script>
+        function validatePassword() {
+            var newPassword = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirm_password").value;
+            if (newPassword != confirmPassword) {
+                alert("Las contraseñas no coinciden.");
+                return false;
+            }
+            return true;
+        }
+    </script>
 </head>
 <body>
     <h1>Editar Perfil</h1>
-    <form method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data" onsubmit="return validatePassword();">
         {% csrf_token %}
-
-        <!-- Actualizar Nombre de Usuario -->
-        <div>
-            <label for="username">Nombre de Usuario:</label>
-            <input type="text" name="username" id="username" value="{{ user.username }}">
-            <button type="submit" name="action" value="update_username">Actualizar Nombre de Usuario</button>
-        </div>
-
-        <!-- Actualizar Email -->
-        <div>
-            <label for="email">Email:</label>
-            <input type="email" name="email" id="email" value="{{ user.email }}">
-            <button type="submit" name="action" value="update_email">Actualizar Email</button>
-        </div>
+        {{ user_form.as_p }}
 
         
         <!-- <div class="avatar-selection">
@@ -66,18 +65,7 @@
         </div>
          -->
 
-        <div class="avatar-selection">
-            {% for choice in user_form.avatar.field.choices %}
-                <label>
-                    <img src="{% static choice.0 %}" alt="{{ choice.1 }}">
-                    <input type="radio" name="avatar" value="{{ choice.0 }}" {% if user.avatar == choice.0 %}checked{% endif %}>
-                </label>
-            {% endfor %}
-        </div>
-               
-        
 
-        <button type="submit" name="action" value="update_avatar">Actualizar Avatar</button>
 
         <!-- Actualizar Descripción -->
         <div>
@@ -86,13 +74,28 @@
             <button type="submit" name="action" value="update_description">Actualizar Descripción</button>
         </div>
 
+
+
+        <div class="avatar-selection">
+            {% for choice in user_form.avatar.field.choices %}
+                <label>
+                    <img src="{% static choice.0 %}" alt="{{ choice.1 }}">
+                    <input type="radio" name="avatar" value="{{ choice.0 }}" {% if user.avatar == choice.0 %}checked{% endif %}>
+                </label>
+            {% endfor %}
+        </div>
+        <button type="submit" name="action" value="update_avatar">Actualizar Avatar</button>
+
+
         <!-- Actualizar Contraseña -->
         <div>
             <label for="password">Nueva Contraseña:</label>
             <input type="password" name="password" id="password">
+            <label for="confirm_password">Confirmar Nueva Contraseña:</label>
+            <input type="password" name="confirm_password" id="confirm_password">
             <button type="submit" name="action" value="update_password">Actualizar Contraseña</button>
         </div>
-
+        
         <!-- Botón para guardar todos los cambios -->
         <button type="submit" name="action" value="update_all">Guardar todos los cambios</button>
     </form>

@@ -16,7 +16,7 @@ class CustomUserCreationForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
         model = CustomUser
-        fields = ('username', 'email', 'avatar')
+        fields = ('username', 'email', 'password1', 'password2', 'avatar')
 
 class CustomUserChangeForm(UserChangeForm):
     username = forms.CharField(
@@ -31,6 +31,7 @@ class CustomUserChangeForm(UserChangeForm):
     )
     website = forms.URLField(required=False)
     avatar = forms.ChoiceField(choices=CustomUserCreationForm.AVATAR_CHOICES, label=_("Avatar"), widget=forms.RadioSelect)
+
 
     class Meta(UserChangeForm.Meta):
         model = CustomUser
