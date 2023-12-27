@@ -26,4 +26,4 @@ def publish_blog(request):
         # Redirigir a la página de detalles del blog
         return redirect('blog_detail', blog_id=blog.id)
     else:
-        return render(request, 'blog_edit.html')
+        return render(request, 'blog/blog_edit.html')
