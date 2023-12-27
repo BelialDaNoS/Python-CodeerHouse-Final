@@ -12,7 +12,7 @@
 <div>
     <h2>Perfil de {{ user.username }}</h2>
     {% if user.profile_image %}
-        <img src="{{ user.profile_image.url }}" alt="Avatar de {{ user.username }}">
+        <img src="{% static user.profile_avatar %}" alt="Avatar">
     {% else %}
         <p>No hay avatar cargado.</p>
     {% endif %}
