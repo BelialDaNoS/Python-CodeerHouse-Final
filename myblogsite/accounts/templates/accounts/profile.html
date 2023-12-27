@@ -1,6 +1,5 @@
 <!-- "myblogsite\accounts\templates\accounts\profile.html" -->
 {% load static %}
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,15 +7,14 @@
     <link rel="stylesheet" href="{% static 'css/accounts_style.css' %}">
 </head>
 <body>
-<!-- Cambio en profile.html -->
-<div>
-    <h2>Perfil de {{ user.username }}</h2>
-    {% if user.profile_image %}
-        <img src="{% static user.profile_avatar %}" alt="Avatar">
-    {% else %}
-        <p>No hay avatar cargado.</p>
-    {% endif %}
-</div>
+    <div>
+        <h2>Perfil de {{ user.username }}</h2>
+        {% if user.avatar %}
+            <img src="{% static user.avatar %}" alt="Avatar de {{ user.username }}">
+        {% else %}
+            <p>No hay avatar cargado.</p>
+        {% endif %}
+    </div>
 <p>Email: {{ user.email }}</p>
 <p>Descripción: {{ user.description }}</p>
 <a href="{% url 'edit_profile' %}">Editar Perfil</a>

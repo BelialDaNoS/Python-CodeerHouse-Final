@@ -1,4 +1,4 @@
-# "myblogsite\accounts\forms.py"
+# "myblogsite/accounts/forms.py"
 from django import forms
 from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm, UserCreationForm
 from django.utils.translation import gettext_lazy as _
@@ -12,11 +12,11 @@ class CustomUserCreationForm(UserCreationForm):
         ('avatars/avatar3.png', _('Avatar') + ' 3'),
         ('avatars/avatar4.png', _('Avatar') + ' 4'),
     ]
-    profile_image = forms.ChoiceField(choices=AVATAR_CHOICES, label=_("Avatar"), widget=forms.RadioSelect)
+    avatar = forms.ChoiceField(choices=AVATAR_CHOICES, label=_("Avatar"), widget=forms.RadioSelect)
 
     class Meta(UserCreationForm.Meta):
         model = CustomUser
-        fields = ('username', 'email', 'profile_image')
+        fields = ('username', 'email', 'avatar')
 
 class CustomUserChangeForm(UserChangeForm):
     username = forms.CharField(
@@ -30,14 +30,11 @@ class CustomUserChangeForm(UserChangeForm):
         required=False
     )
     website = forms.URLField(required=False)
-    profile_image = forms.ImageField(
-        label=_("Avatar"),
-        required=False
-    )
+    avatar = forms.ChoiceField(choices=CustomUserCreationForm.AVATAR_CHOICES, label=_("Avatar"), widget=forms.RadioSelect)
 
     class Meta(UserChangeForm.Meta):
         model = CustomUser
-        fields = ['username', 'email', 'description', 'website', 'profile_image']
+        fields = ['username', 'email', 'description', 'website', 'avatar']
 
 class CustomPasswordChangeForm(PasswordChangeForm):
     def clean_new_password1(self):

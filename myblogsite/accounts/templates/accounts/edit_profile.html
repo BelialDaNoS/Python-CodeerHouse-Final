@@ -27,7 +27,7 @@
         </div>
 
         
-        <div class="avatar-selection">
+        <!-- <div class="avatar-selection">
             {% if user.profile_image %}
                 {% with user.profile_image.url as current_avatar %}
                     <label for="avatar1"><img src="{% static 'avatars/avatar1.png' %}" alt="Avatar 1"></label>
@@ -64,7 +64,16 @@
                 {% endwith %}
             {% endif %}
         </div>
-        
+         -->
+         
+         <div class="avatar-selection">
+            {% for choice in form.avatar.field.choices %}
+                <label>
+                    <img src="{% static choice.0 %}" alt="{{ choice.1 }}">
+                    <input type="radio" name="avatar" value="{{ choice.0 }}">
+                </label>
+            {% endfor %}
+        </div>
                
         
 
