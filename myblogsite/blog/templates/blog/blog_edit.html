@@ -1,5 +1,4 @@
 {% load static %}
-{% load ckeditor_tags %} 
 
 <!DOCTYPE html>
 <html>
@@ -18,6 +17,7 @@
         </form>
         <a href="{% url 'blog_list' %}" class="btn btn-secondary">Cancelar</a>
     </div>
-    <script src="{% static 'js/ckeditor.js' %}"></script>  <!-- Asegúrate de que el JS de CKEditor esté incluido -->
+    <!-- No necesitas cargar los tags de ckeditor aquí -->
+    <!-- Asegúrate de que el archivo JS de CKEditor esté incluido en tu proyecto y referenciado correctamente en settings.py -->
 </body>
 </html>
