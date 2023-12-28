@@ -4,7 +4,7 @@ from .models import Blog
 from ckeditor.widgets import CKEditorWidget
 
 class BlogForm(forms.ModelForm):
-    body = forms.CharField(widget=CKEditorWidget(), label='Contenido')  # Cambia 'body' por 'Contenido' y usa CKEditorWidget
+    body = forms.CharField(widget=CKEditorWidget(), label='Contenido') 
 
     class Meta:
         model = Blog

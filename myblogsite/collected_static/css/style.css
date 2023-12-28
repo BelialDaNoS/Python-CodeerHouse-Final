@@ -1,0 +1,168 @@
+/* "myblogsite\static\css\style.css" */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Fuentes de Google */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f7f7f7;
+    color: #333;
+    line-height: 1.6;
+}
+
+header {
+    background: #0056b3;
+    padding: 20px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10%;
+}
+
+header a {
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 20px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+header a:hover,
+header a:focus {
+    background-color: #fff;
+    color: #0056b3;
+    border: 2px solid #fff;
+}
+
+/* Estilo para el botón de acción principal */
+.header-button {
+    background-color: #ff4757;
+    color: #fff;
+    border-radius: 5px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.header-button:hover {
+    background-color: #ff6b81;
+}
+
+.content {
+    padding-top: 100px; /* Ajustar según la altura del header */
+    text-align: center;
+}
+
+/* Estilos para la sección de los blogs */
+.blog-preview {
+    margin: 20px auto;
+    max-width: 800px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.blog-preview h2 {
+    color: #0056b3;
+    margin-bottom: 10px;
+}
+
+/* Fondo y estilo para el footer */
+footer {
+    background: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 20px;
+}
+
+footer p {
+    margin: 0;
+}
+
+
+/* Añade esto a tu archivo style.css */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #f7f7f7;
+}
+
+.login-form {
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.login-form h2 {
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group input {
+    width: 90%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.login-button {
+    width: 90%;
+    padding: 10px;
+    background: #0056b3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.login-button:hover {
+    background: #0069d9;
+}
+
+.login-form a {
+    display: block;
+    margin-top: 15px;
+}
+
+.publish-blog-button-container {
+    margin: 20px 0;
+    text-align: center;
+}
+
+#publish-blog-button {
+    background-color: #ff4757; /* Red color similar to the main action buttons */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+#publish-blog-button:hover {
+    background-color: #e04050; /* Darker shade for hover effect */
+}
+
