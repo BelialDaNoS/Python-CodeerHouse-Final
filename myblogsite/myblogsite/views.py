@@ -2,6 +2,7 @@
 from django.shortcuts import render, redirect
 from blog.models import Blog
 from django.contrib.auth.decorators import login_required
+from blog.forms import BlogForm 
 
 def landing(request):
     blogs = Blog.objects.order_by('-date')[:2]
@@ -11,19 +12,12 @@ def landing(request):
 @login_required
 def publish_blog(request):
     if request.method == 'POST':
-        # Asumiendo que tienes un formulario para crear/editar el blog
-        # Puedes usar un formulario de Django o manejar los datos directamente
-        title = request.POST.get('title')
-        content = request.POST.get('content')
-        # ... cualquier otro dato del formulario
-
-        # Crear o actualizar el blog
-        blog, created = Blog.objects.update_or_create(
-            id=request.POST.get('blog_id'),  # Si es una edición, 'blog_id' debería estar presente
-            defaults={'title': title, 'content': content, 'author': request.user}
-        )
-
-        # Redirigir a la página de detalles del blog
-        return redirect('blog_detail', blog_id=blog.id)
+        form = BlogForm(request.POST, request.FILES)
+        if form.is_valid():
+            blog = form.save(commit=False)
+            blog.author = request.user
+            blog.save()
+            return redirect('blog_detail', pk=blog.pk)
     else:
-        return render(request, 'blog/blog_edit.html')
+        form = BlogForm()  # Crea una instancia de BlogForm para pasar al contexto
+    return render(request, 'blog/blog_edit.html', {'form': form})

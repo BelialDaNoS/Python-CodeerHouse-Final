@@ -1,25 +1,23 @@
 {% load static %}
+{% load ckeditor_tags %} 
+
 <!DOCTYPE html>
 <html>
 <head>
     <title>Publicar Blog</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">  <!-- Tu CSS personalizado -->
 </head>
 <body>
-    <h1>Publicar Blog</h1>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Publicar</button>
-    </form>
-    <a href="{% url 'blog_list' %}">Cancelar</a>
-    <script src="{% static 'js/script.js' %}"></script>
-</body>
-</html>
-
-
+    <div class="container mt-5">
+        <h1>Publicar Blog</h1>
+        <form method="post" enctype="multipart/form-data" class="form-group">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Publicar</button>
         </form>
+        <a href="{% url 'blog_list' %}" class="btn btn-secondary">Cancelar</a>
     </div>
-    <script src="{% static 'js/your_script.js' %}"></script>
+    <script src="{% static 'js/ckeditor.js' %}"></script>  <!-- Asegúrate de que el JS de CKEditor esté incluido -->
 </body>
 </html>
