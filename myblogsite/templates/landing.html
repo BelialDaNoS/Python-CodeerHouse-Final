@@ -47,7 +47,11 @@
     <div class="blog-container">
         {% for blog in blogs %}
             <div class="blog-preview">
-                <img src="{{ blog.author.profile_image.url }}" alt="Avatar" class="user-avatar">
+                {% if blog.author.profile_image %}
+                    <img src="{{ blog.author.profile_image.url }}" alt="Avatar" class="user-avatar">
+                {% else %}
+                    <img src="{% static 'avatars/default-avatar.png' %}" alt="Avatar" class="user-avatar">
+                {% endif %}
                 <div class="blog-info">
                     <h2>{{ blog.title }}</h2>
                     <button onclick="toggleContent('content-{{ blog.id }}')">Ver Contenido</button>
