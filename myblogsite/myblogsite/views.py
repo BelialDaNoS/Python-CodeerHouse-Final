@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from blog.forms import BlogForm 
 
 def landing(request):
-    blogs = Blog.objects.order_by('-date')[:2]
+    blogs = Blog.objects.order_by('-date')
     return render(request, 'landing.html', {'blogs': blogs})
 
 
