@@ -9,6 +9,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
 body {
+    padding-top: 120px;
     font-family: 'Roboto', sans-serif;
     background-color: #f7f7f7;
     color: #333;
@@ -60,7 +61,7 @@ header a:focus {
 }
 
 .content {
-    padding-top: 100px; 
+    padding-top: 100px; /* Ajustar según la altura del header */
     text-align: center;
 }
 
@@ -166,18 +167,3 @@ footer p {
     background-color: #e04050; /* Darker shade for hover effect */
 }
 
-.no-blogs {
-    text-align: center;
-    margin-top: 100px; /* Ajusta este valor según sea necesario */
-}
-
-.user-avatar, .blog-avatar {
-    width: 5px; /* Ajusta el tamaño según sea necesario */
-    height: 5px;
-    border-radius: 50%;
-}
-
-.user-info {
-    display: flex;
-    align-items: center;
-}
