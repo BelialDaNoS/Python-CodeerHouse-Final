@@ -6,7 +6,7 @@ from .forms import BlogForm
 from django.contrib.auth.decorators import login_required
 
 def blog_list(request):
-    blogs = Blog.objects.all()
+    blogs = Blog.objects.all().order_by('-date')
     return render(request, 'blog/blog_list.html', {'blogs': blogs})
 
 def blog_detail(request, pk):
@@ -21,7 +21,7 @@ def blog_create(request):
             blog = form.save(commit=False)
             blog.author = request.user
             blog.save()
-            return redirect('blog_detail', pk=blog.pk) 
+            return redirect('blog_list')
     else:
         form = BlogForm()
     return render(request, 'blog/blog_edit.html', {'form': form})

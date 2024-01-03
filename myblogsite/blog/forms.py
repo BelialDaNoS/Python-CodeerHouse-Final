@@ -8,14 +8,12 @@ class BlogForm(forms.ModelForm):
 
     class Meta:
         model = Blog
-        fields = ['title', 'category', 'body', 'image']
+        fields = ['title', 'category', 'body']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'category': forms.Select(attrs={'class': 'form-control'}),
-            'image': forms.FileInput(attrs={'class': 'form-control'}),
         }
         labels = {
             'title': 'Título',
             'category': 'Categoría',
-            'image': 'Imágenes',
         }
