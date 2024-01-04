@@ -3,8 +3,10 @@
 <html>
 <head>
     <title>Landing Page</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <style>
+
         .no-blogs {
             text-align: center;
             margin-top: 100px; /* Ajusta este valor según sea necesario */
@@ -22,7 +24,7 @@
         }
     </style>
 </head>
-<body>
+<body style="padding-top: 100px;">
     <header>
         <div class="container">
             {% if user.is_authenticated %}
@@ -66,6 +68,11 @@
                 {% endif %}
                 <div class="blog-info">
                     <h2>{{ blog.title }}</h2>
+                    {% if blog.author == request.user %}
+                    <a href="{% url 'blog_delete' pk=blog.pk %}" title="Eliminar Blog">
+                        <i class="material-icons" style="color: red;">delete</i>
+                    </a>
+                    {% endif %}
                     <button onclick="toggleContent('content-{{ blog.id }}')">Ver Contenido</button>
                     <div id="content-{{ blog.id }}" style="display:none;">
                         <p>{{ blog.content }}</p>

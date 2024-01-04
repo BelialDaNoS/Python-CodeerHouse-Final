@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from blog.models import Blog
 from django.contrib.auth.decorators import login_required
 from blog.forms import BlogForm 
+from django.urls import reverse
 
 def landing(request):
     blogs = Blog.objects.order_by('-date')
@@ -17,7 +18,7 @@ def publish_blog(request):
             blog = form.save(commit=False)
             blog.author = request.user
             blog.save()
-            return redirect('blog_detail', pk=blog.pk)
+            return redirect(reverse('landing'))
     else:
-        form = BlogForm()  # Crea una instancia de BlogForm para pasar al contexto
+        form = BlogForm()
     return render(request, 'blog/blog_edit.html', {'form': form})

@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from .models import Blog
 from .forms import BlogForm
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 
 def blog_list(request):
     blogs = Blog.objects.all().order_by('-date')
@@ -45,6 +46,6 @@ def blog_delete(request, pk):
     blog = get_object_or_404(Blog, pk=pk)
     if request.user == blog.author:
         blog.delete()
-        return redirect('blog_list')
+        return redirect(reverse('landing'))
     else:
         return HttpResponse("You are not authorized to delete this blog.")

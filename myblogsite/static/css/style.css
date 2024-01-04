@@ -9,7 +9,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
 body {
-    padding-top: 120px;
     font-family: 'Roboto', sans-serif;
     background-color: #f7f7f7;
     color: #333;
@@ -17,9 +16,9 @@ body {
 }
 
 header {
+    position: static;
     background: #0056b3;
     padding: 20px 0;
-    position: fixed;
     width: 100%;
     top: 0;
     z-index: 1000;
@@ -58,11 +57,6 @@ header a:focus {
 
 .header-button:hover {
     background-color: #ff6b81;
-}
-
-.content {
-    padding-top: 100px; /* Ajustar según la altura del header */
-    text-align: center;
 }
 
 /* Estilos para la sección de los blogs */
