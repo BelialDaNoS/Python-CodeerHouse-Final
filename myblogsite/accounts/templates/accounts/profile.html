@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{% static 'css/accounts_style.css' %}">
 </head>
 <body>
-<!-- Cambio en profile.html -->
+
 <h1>Perfil de {{ user.username }}</h1>
 {% if user.profile_image %}
     <img src="{{ user.profile_image.url }}" alt="Imagen de Perfil">

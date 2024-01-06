@@ -63,9 +63,12 @@ def edit_profile(request):
                 request.user.save()
                 messages.success(request, "Email actualizado.")
 
-        if 'update_avatar' in request.POST:
+        if 'update_avatar' in request.POST or 'update_all' in request.POST:
             if user_form.is_valid():
-                user_form.save()
+                user = user_form.save(commit=False)
+                avatar_choice = user_form.cleaned_data['profile_avatar']
+                user.profile_image = 'ruta/del/avatar/' + avatar_choice  # Actualizar la ruta según corresponda
+                user.save()
                 messages.success(request, "Avatar actualizado.")
 
         if 'update_description' in request.POST:
