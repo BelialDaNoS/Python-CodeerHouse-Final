@@ -67,7 +67,7 @@ def edit_profile(request):
             if user_form.is_valid():
                 user = user_form.save(commit=False)
                 avatar_choice = user_form.cleaned_data['profile_avatar']
-                user.profile_image = 'ruta/del/avatar/' + avatar_choice  # Actualizar la ruta según corresponda
+                user.profile_image = avatar_choice
                 user.save()
                 messages.success(request, "Avatar actualizado.")
 
