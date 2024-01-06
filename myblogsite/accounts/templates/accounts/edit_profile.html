@@ -26,18 +26,31 @@
         </div>
 
         <div class="avatar-selection">
-            {% for choice in user_form.profile_avatar %}
             <label>
-                {{ choice.tag }}
-                <!-- Debug para imprimir la ruta -->
-                <p>Ruta del avatar: {{ choice.value }}</p>
-                <img src="{% static choice.data %}" alt="{{ choice.choice_label }}">
+                <input type="radio" name="profile_avatar" value="avatars/avatar1.png" id="id_profile_avatar_0" required>
+                <img src="{% static 'avatars/avatar1.png' %}" alt="Avatar 1">
             </label>
-            {% endfor %}
+            
+            <label>
+                <input type="radio" name="profile_avatar" value="avatars/avatar2.png" id="id_profile_avatar_1" required>
+                <img src="{% static 'avatars/avatar2.png' %}" alt="Avatar 2">
+            </label>
+        
+            <label>
+                <input type="radio" name="profile_avatar" value="avatars/avatar3.png" id="id_profile_avatar_2" required>
+                <img src="{% static 'avatars/avatar3.png' %}" alt="Avatar 3">
+            </label>
+        
+            <label>
+                <input type="radio" name="profile_avatar" value="avatars/avatar4.png" id="id_profile_avatar_3" required>
+                <img src="{% static 'avatars/avatar4.png' %}" alt="Avatar 4">
+            </label>
+        
+            <label>
+                <input type="radio" name="profile_avatar" value="avatars/default-avatar.png" id="id_profile_avatar_4" required>
+                <img src="{% static 'avatars/default-avatar.png' %}" alt="Default Avatar">
+            </label>
         </div>
-        
-               
-        
 
         <button type="submit" name="action" value="update_avatar">Actualizar Avatar</button>
 
