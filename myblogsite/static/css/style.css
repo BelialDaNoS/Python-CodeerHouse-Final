@@ -5,7 +5,6 @@
     box-sizing: border-box;
 }
 
-/* Fuentes de Google */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
 body {
@@ -88,7 +87,6 @@ footer p {
 }
 
 
-/* Añade esto a tu archivo style.css */
 .login-container {
     display: flex;
     justify-content: center;

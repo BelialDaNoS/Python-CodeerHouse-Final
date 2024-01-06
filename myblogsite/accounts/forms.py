@@ -23,12 +23,13 @@ class CustomUserChangeForm(UserChangeForm):
     )
     website = forms.URLField(required=False)
     AVATAR_CHOICES = [
-        ('avatars/avatar1.png', _('Avatar') + ' 1'),
-        ('avatars/avatar2.png', _('Avatar') + ' 2'),
-        ('avatars/avatar3.png', _('Avatar') + ' 3'),
-        ('avatars/avatar4.png', _('Avatar') + ' 4'),
+        ('avatars/avatar1.png', 'Avatar 1'),
+        ('avatars/avatar2.png', 'Avatar 2'),
+        ('avatars/avatar3.png', 'Avatar 3'),
+        ('avatars/avatar4.png', 'Avatar 4'),
+        ('avatars/default-avatar.png', 'Default Avatar'),
     ]
-    profile_avatar = forms.ChoiceField(choices=AVATAR_CHOICES, label=_("Avatar"), widget=forms.RadioSelect)
+    profile_avatar = forms.ChoiceField(choices=AVATAR_CHOICES, label="Avatar", widget=forms.RadioSelect)
 
     class Meta(UserChangeForm.Meta):
         model = CustomUser

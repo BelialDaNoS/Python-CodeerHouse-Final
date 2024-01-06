@@ -24,7 +24,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('', views.landing, name='landing'),
     path('admin/', admin.site.urls),
-    path('blog/', include('blog.urls')),
+    path('pages/', include('blog.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/', include('accounts.urls')),
     path('publish-blog/', views.publish_blog, name='publish_blog'),
