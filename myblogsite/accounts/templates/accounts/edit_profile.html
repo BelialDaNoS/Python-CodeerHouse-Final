@@ -29,7 +29,9 @@
             {% for choice in user_form.profile_avatar %}
             <label>
                 {{ choice.tag }}
-                <img src="{% static choice.choice_value %}" alt="{{ choice.choice_label }}">
+                <!-- Debug para imprimir la ruta -->
+                <p>Ruta del avatar: {{ choice.value }}</p>
+                <img src="{% static choice.data %}" alt="{{ choice.choice_label }}">
             </label>
             {% endfor %}
         </div>
