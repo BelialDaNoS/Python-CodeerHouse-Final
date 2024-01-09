@@ -4,13 +4,17 @@ from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm, UserCr
 from django.utils.translation import gettext_lazy as _
 from .models import CustomUser
 from django.core.exceptions import ValidationError
+from django.forms import ImageField
+
 
 class CustomUserCreationForm(UserCreationForm):
+    profile_image = ImageField(required=False, label="Foto de Perfil")
     class Meta(UserCreationForm.Meta):
         model = CustomUser
-        fields = ('username', 'email')  # Add any other fields you need
+        fields = ('username', 'email', 'profile_image')
 
 class CustomUserChangeForm(UserChangeForm):
+    profile_image = ImageField(required=False, label="Foto de Perfil")
     username = forms.CharField(
         label=_("Nombre de usuario"),
         max_length=20,
@@ -33,7 +37,7 @@ class CustomUserChangeForm(UserChangeForm):
 
     class Meta(UserChangeForm.Meta):
         model = CustomUser
-        fields = ['username', 'email', 'description', 'website', 'profile_avatar']
+        fields = ['username', 'email', 'description', 'website', 'profile_image']
 
 
 class CustomPasswordChangeForm(PasswordChangeForm):

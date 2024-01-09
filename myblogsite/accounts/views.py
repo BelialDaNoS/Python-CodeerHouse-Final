@@ -27,9 +27,10 @@ def check_username(request):
 
 def signup(request):
     if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            login(request, user)
             return redirect('landing')
     else:
         form = CustomUserCreationForm()
@@ -62,14 +63,13 @@ def edit_profile(request):
                 request.user.email = new_email
                 request.user.save()
                 messages.success(request, "Email actualizado.")
-
-        if 'update_avatar' in request.POST or 'update_all' in request.POST:
+                
+        if 'update_image' in request.POST or 'update_all' in request.POST:
             if user_form.is_valid():
                 user = user_form.save(commit=False)
-                avatar_choice = user_form.cleaned_data['profile_avatar']
-                user.profile_image = avatar_choice
+                user.profile_image = user_form.cleaned_data['profile_image']
                 user.save()
-                messages.success(request, "Avatar actualizado.")
+                messages.success(request, "Imagen de perfil actualizada.")
 
         if 'update_description' in request.POST:
             if user_form.is_valid():
