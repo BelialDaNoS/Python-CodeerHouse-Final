@@ -25,40 +25,24 @@
             <button type="submit" name="action" value="update_email">Actualizar Email</button>
         </div>
 
-        <div class="avatar-selection">
-            <label>
-                <input type="radio" name="profile_avatar" value="avatars/avatar1.png" id="id_profile_avatar_0" required>
-                <img src="{% static 'avatars/avatar1.png' %}" alt="Avatar 1">
-            </label>
-            
-            <label>
-                <input type="radio" name="profile_avatar" value="avatars/avatar2.png" id="id_profile_avatar_1" required>
-                <img src="{% static 'avatars/avatar2.png' %}" alt="Avatar 2">
-            </label>
-        
-            <label>
-                <input type="radio" name="profile_avatar" value="avatars/avatar3.png" id="id_profile_avatar_2" required>
-                <img src="{% static 'avatars/avatar3.png' %}" alt="Avatar 3">
-            </label>
-        
-            <label>
-                <input type="radio" name="profile_avatar" value="avatars/avatar4.png" id="id_profile_avatar_3" required>
-                <img src="{% static 'avatars/avatar4.png' %}" alt="Avatar 4">
-            </label>
-        
-            <label>
-                <input type="radio" name="profile_avatar" value="avatars/default-avatar.png" id="id_profile_avatar_4" required>
-                <img src="{% static 'avatars/default-avatar.png' %}" alt="Default Avatar">
-            </label>
-        </div>
-
-        <button type="submit" name="action" value="update_avatar">Actualizar Avatar</button>
-
         <!-- Actualizar Descripción -->
         <div>
             <label for="description">Descripción:</label>
             <textarea name="description" id="description">{{ user.description }}</textarea>
             <button type="submit" name="action" value="update_description">Actualizar Descripción</button>
+        </div>
+
+        <!-- Actualizar Foto de Perfil -->
+        <div>
+            <label for="profile_image">Foto de Perfil:</label>
+            {% if user.profile_image %}
+                <img src="{{ user.profile_image.url }}" alt="Tu foto de perfil" />
+            {% endif %}
+            <input type="file" name="profile_image" id="profile_image" accept="image/*">
+            {% for error in user_form.profile_image.errors %}
+                <p style="color: red;">{{ error }}</p>
+            {% endfor %}
+            <button type="submit" name="action" value="update_image">Actualizar Foto de Perfil</button>
         </div>
 
         <!-- Actualizar Contraseña -->

@@ -4,7 +4,9 @@ from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm, UserCr
 from django.utils.translation import gettext_lazy as _
 from .models import CustomUser
 from django.core.exceptions import ValidationError
+from django.template.defaultfilters import filesizeformat
 from django.forms import ImageField
+from django.conf import settings
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -26,14 +28,19 @@ class CustomUserChangeForm(UserChangeForm):
         required=False
     )
     website = forms.URLField(required=False)
-    AVATAR_CHOICES = [
-        ('avatars/avatar1.png', 'Avatar 1'),
-        ('avatars/avatar2.png', 'Avatar 2'),
-        ('avatars/avatar3.png', 'Avatar 3'),
-        ('avatars/avatar4.png', 'Avatar 4'),
-        ('avatars/default-avatar.png', 'Default Avatar'),
-    ]
-    profile_avatar = forms.ChoiceField(choices=AVATAR_CHOICES, label="Avatar", widget=forms.RadioSelect)
+    def clean_profile_image(self):
+        profile_image = self.cleaned_data.get('profile_image')
+
+        if profile_image and not profile_image.content_type.startswith('image'):
+            raise ValidationError(_('Solo se permiten archivos de imagen.'))
+
+        if profile_image and profile_image.size > settings.MAX_UPLOAD_SIZE:
+            raise ValidationError(_('El archivo es demasiado grande. Tamaño máximo permitido: %(max_size)s. Tamaño actual: %(current_size)s.') % {
+                'max_size': filesizeformat(settings.MAX_UPLOAD_SIZE),
+                'current_size': filesizeformat(profile_image.size),
+            })
+
+        return profile_image
 
     class Meta(UserChangeForm.Meta):
         model = CustomUser
