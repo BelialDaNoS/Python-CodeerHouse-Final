@@ -43,9 +43,11 @@ def profile(request):
 @login_required
 def edit_profile(request):
     if request.method == 'POST':
+        print("request.POST:", request.POST)  # Verificar los datos enviados desde el formulario
+        print("request.FILES:", request.FILES)  # Verificar los archivos recibidos
         user_form = CustomUserChangeForm(request.POST, request.FILES, instance=request.user)
         password_form = CustomPasswordChangeForm(user=request.user, data=request.POST)
-        print("request.FILES:", request.FILES)
+
 
         if 'update_username' in request.POST:
             new_username = request.POST.get('username')
@@ -65,12 +67,19 @@ def edit_profile(request):
                 request.user.save()
                 messages.success(request, "Email actualizado.")
                 
-        if 'update_image' in request.POST or 'update_all' in request.POST:
-            if user_form.is_valid():
-                user = user_form.save(commit=False)
+        if 'update_all' in request.POST:
+            if 'profile_image' in request.FILES:
                 user.profile_image = user_form.cleaned_data['profile_image']
+                print("Intentando actualizar la imagen...")  # Verificar si entra en este bloque
                 user.save()
+                print("Imagen guardada en:", user.profile_image.path)  # Verificar la ruta de guardado
                 messages.success(request, "Imagen de perfil actualizada.")
+                if user_form.is_valid():
+                    user = user_form.save(commit=False)
+                    user.profile_image = user_form.cleaned_data['profile_image']
+
+                else:
+                    print("Formulario de imagen no válido:", user_form.errors)
 
         if 'update_description' in request.POST:
             if user_form.is_valid():
