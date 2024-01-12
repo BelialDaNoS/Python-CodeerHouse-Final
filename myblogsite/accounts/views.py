@@ -45,6 +45,7 @@ def edit_profile(request):
     if request.method == 'POST':
         user_form = CustomUserChangeForm(request.POST, request.FILES, instance=request.user)
         password_form = CustomPasswordChangeForm(user=request.user, data=request.POST)
+        print("request.FILES:", request.FILES)
 
         if 'update_username' in request.POST:
             new_username = request.POST.get('username')
