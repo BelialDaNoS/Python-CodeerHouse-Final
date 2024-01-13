@@ -1,4 +1,4 @@
-#"myblogsite\accounts\views.py"
+# "myblogsite\accounts\views.py"
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, update_session_auth_hash, logout
@@ -43,12 +43,11 @@ def profile(request):
 @login_required
 def edit_profile(request):
     if request.method == 'POST':
-        print("request.POST:", request.POST)  # Verificar los datos enviados desde el formulario
-        print("request.FILES:", request.FILES)  # Verificar los archivos recibidos
         user_form = CustomUserChangeForm(request.POST, request.FILES, instance=request.user)
         password_form = CustomPasswordChangeForm(user=request.user, data=request.POST)
-
-
+        print("request.POST:", request.POST)
+        print("request.FILES:", request.FILES)
+        
         if 'update_username' in request.POST:
             new_username = request.POST.get('username')
             if User.objects.filter(username=new_username).exists():
@@ -68,16 +67,27 @@ def edit_profile(request):
                 messages.success(request, "Email actualizado.")
                 
         if 'update_image' in request.POST:
+            # Debugging: Confirmar que estamos intentando actualizar la imagen
+            print("Intentando actualizar la imagen")
+
             if user_form.is_valid():
+                # Debugging: Imprimir si el formulario de usuario es válido
+                print("Formulario de usuario válido")
+
                 user = user_form.save(commit=False)
                 if 'profile_image' in request.FILES:
                     user.profile_image = user_form.cleaned_data['profile_image']
                     user.save()
+
+                    # Debugging: Imprimir la ruta de la imagen guardada
+                    print("Imagen guardada en:", user.profile_image.path)
+
                     messages.success(request, "Imagen de perfil actualizada.")
                 else:
                     messages.error(request, "No se ha proporcionado ninguna imagen.")
             else:
-                print("Formulario de imagen no válido:", user_form.errors)
+                # Debugging: Imprimir errores de formulario si no es válido
+                print("Errores del formulario de usuario:", user_form.errors)
 
 
         if 'update_description' in request.POST:
@@ -88,12 +98,14 @@ def edit_profile(request):
         if 'update_password' in request.POST:
             if password_form.is_valid():
                 password_form.save()
+                update_session_auth_hash(request, request.user)  # Importante para no desloguear al usuario
                 messages.success(request, "Contraseña actualizada.")
 
         if 'update_all' in request.POST:
             if user_form.is_valid() and password_form.is_valid():
                 user_form.save()
                 password_form.save()
+                update_session_auth_hash(request, request.user)  # Importante para no desloguear al usuario
                 messages.success(request, "Todos los cambios guardados.")
 
         return redirect('profile')
@@ -101,4 +113,4 @@ def edit_profile(request):
     else:
         user_form = CustomUserChangeForm(instance=request.user)
         password_form = CustomPasswordChangeForm(user=request.user)
-    return render(request, 'accounts/edit_profile.html', {'user_form': user_form, 'password_form': password_form})
+        return render(request, 'accounts/edit_profile.html', {'user_form': user_form, 'password_form': password_form})
