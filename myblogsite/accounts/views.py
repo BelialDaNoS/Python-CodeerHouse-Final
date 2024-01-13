@@ -68,18 +68,18 @@ def edit_profile(request):
                 messages.success(request, "Email actualizado.")
                 
         if 'update_all' in request.POST:
-            if 'profile_image' in request.FILES:
-                user.profile_image = user_form.cleaned_data['profile_image']
-                print("Intentando actualizar la imagen...")  # Verificar si entra en este bloque
+            if user_form.is_valid():
+                user = user_form.save(commit=False)
+
+                if 'profile_image' in request.FILES:
+                    user.profile_image = user_form.cleaned_data['profile_image']
+                    print("Intentando actualizar la imagen...")  # Verificar si entra en este bloque
+
                 user.save()
                 print("Imagen guardada en:", user.profile_image.path)  # Verificar la ruta de guardado
                 messages.success(request, "Imagen de perfil actualizada.")
-                if user_form.is_valid():
-                    user = user_form.save(commit=False)
-                    user.profile_image = user_form.cleaned_data['profile_image']
-
-                else:
-                    print("Formulario de imagen no válido:", user_form.errors)
+            else:
+                print("Formulario de imagen no válido:", user_form.errors)  # Verificar errores en el formulario
 
         if 'update_description' in request.POST:
             if user_form.is_valid():
