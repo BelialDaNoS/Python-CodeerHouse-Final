@@ -66,28 +66,18 @@ def edit_profile(request):
                 request.user.save()
                 messages.success(request, "Email actualizado.")
                 
-        if 'update_image' in request.POST:
-            # Debugging: Confirmar que estamos intentando actualizar la imagen
-            print("Intentando actualizar la imagen")
-
-            if user_form.is_valid():
-                # Debugging: Imprimir si el formulario de usuario es válido
-                print("Formulario de usuario válido")
-
-                user = user_form.save(commit=False)
-                if 'profile_image' in request.FILES:
-                    user.profile_image = user_form.cleaned_data['profile_image']
+        # Verifica si se está actualizando la imagen o si se está guardando todo
+        if 'update_image' in request.POST or 'update_all' in request.POST:
+            if 'profile_image' in request.FILES:
+                if user_form.is_valid():
+                    user = user_form.save(commit=False)
+                    user.profile_image = request.FILES['profile_image']
                     user.save()
-
-                    # Debugging: Imprimir la ruta de la imagen guardada
-                    print("Imagen guardada en:", user.profile_image.path)
-
                     messages.success(request, "Imagen de perfil actualizada.")
+                    print("Imagen guardada en:", user.profile_image.path)
                 else:
-                    messages.error(request, "No se ha proporcionado ninguna imagen.")
-            else:
-                # Debugging: Imprimir errores de formulario si no es válido
-                print("Errores del formulario de usuario:", user_form.errors)
+                    messages.error(request, "Error al actualizar la imagen de perfil.")
+                    print("Errores del formulario de usuario:", user_form.errors)
 
 
         if 'update_description' in request.POST:
@@ -103,9 +93,12 @@ def edit_profile(request):
 
         if 'update_all' in request.POST:
             if user_form.is_valid() and password_form.is_valid():
-                user_form.save()
+                user = user_form.save(commit=False)
+                if 'profile_image' in request.FILES:
+                    user.profile_image = request.FILES['profile_image']
+                user.save()
                 password_form.save()
-                update_session_auth_hash(request, request.user)  # Importante para no desloguear al usuario
+                update_session_auth_hash(request, request.user)
                 messages.success(request, "Todos los cambios guardados.")
 
         return redirect('profile')
