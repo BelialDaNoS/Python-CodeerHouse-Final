@@ -45,25 +45,34 @@ def profile(request):
 @login_required
 def edit_profile(request):
     if request.method == 'POST':
-        user_form = CustomUserChangeForm(request.POST, instance=request.user)
-        password_form = PasswordChangeForm(request.user, request.POST)
-        
-        if user_form.is_valid():
-            user_form.save()
-            messages.success(request, 'Tu perfil ha sido actualizado.')
+        user_form = CustomUserChangeForm(request.POST, request.FILES, instance=request.user)
+        password_form = CustomPasswordChangeForm(request.user, request.POST)
 
-            if password_form.is_valid():
-                user = password_form.save()
-                update_session_auth_hash(request, user)  # Muy importante para mantener la sesión del usuario
-                messages.success(request, 'Tu contraseña ha sido actualizada.')
-            else:
-                messages.error(request, 'Por favor, corrige el error en la contraseña.')
+        # Procesar la actualización de la imagen de perfil independientemente
+        if 'profile_image' in request.FILES:
+            if user_form.is_valid():
+                user_form.save()
+                messages.success(request, 'Imagen de perfil actualizada con éxito.')
 
+        # Procesar la actualización de la contraseña
+        if password_form.is_valid():
+            user = password_form.save()
+            update_session_auth_hash(request, user)  # Muy importante para mantener la sesión del usuario
+            messages.success(request, 'Tu contraseña ha sido actualizada.')
         else:
-            messages.error(request, 'Por favor, corrige los errores en el formulario.')
+            messages.error(request, 'Por favor, corrige el error en la contraseña.')
+
+        # Si no se actualizó la imagen de perfil, verifica si otros campos son válidos
+        if not 'profile_image' in request.FILES:
+            if user_form.is_valid():
+                user_form.save()
+                messages.success(request, 'Tu perfil ha sido actualizado.')
+            else:
+                messages.error(request, 'Por favor, corrige los errores en el formulario.')
+
     else:
         user_form = CustomUserChangeForm(instance=request.user)
-        password_form = PasswordChangeForm(request.user)
+        password_form = CustomPasswordChangeForm(request.user)
 
     return render(request, 'accounts/edit_profile.html', {
         'user_form': user_form,
