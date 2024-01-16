@@ -40,31 +40,31 @@ def signup(request):
 def profile(request):
     return render(request, 'accounts/profile.html')
 
+
 @login_required
 def edit_profile(request):
     user_form = CustomUserChangeForm(request.POST or None, request.FILES or None, instance=request.user)
     password_form = CustomPasswordChangeForm(user=request.user, data=request.POST or None)
 
     if request.method == 'POST':
-        # Flag to check if any form is valid
+        # Bandera para verificar si algún formulario es válido
         is_form_valid = False
 
-        # Check if we're updating the profile image
+        # Verificar si estamos actualizando la imagen del perfil
         if 'update_image' in request.POST:
-            if user_form.is_valid():
+            if 'profile_image' in request.FILES:
                 user = user_form.save(commit=False)
-                if 'profile_image' in request.FILES:
-                    user.profile_image = request.FILES['profile_image']
-                    is_form_valid = True
+                user.profile_image = request.FILES['profile_image']
+                is_form_valid = True
 
-        # Check if we're updating the password
+        # Verificar si estamos actualizando la contraseña
         if 'update_password' in request.POST:
             if password_form.is_valid():
                 password_form.save()
                 update_session_auth_hash(request, request.user)
                 is_form_valid = True
 
-        # If updating all, or if one of the above sections is valid, save the user
+        # Si actualizamos todo, o si una de las secciones anteriores es válida, guardar el usuario
         if 'update_all' in request.POST or is_form_valid:
             if user_form.is_valid():
                 user_form.save()
