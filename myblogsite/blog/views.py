@@ -10,9 +10,15 @@ def blog_list(request):
     blogs = Blog.objects.all().order_by('-date')
     return render(request, 'blog/blog_list.html', {'blogs': blogs})
 
+@login_required
 def blog_detail(request, pk):
     blog = get_object_or_404(Blog, pk=pk)
+    if request.method == "POST":
+        text = request.POST.get('text')
+        Comment.objects.create(blog=blog, author=request.user, text=text)
+        return redirect('blog_detail', pk=blog.pk)
     return render(request, 'blog/blog_detail.html', {'blog': blog})
+
 
 @login_required
 def blog_create(request):
