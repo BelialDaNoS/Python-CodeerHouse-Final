@@ -21,3 +21,10 @@ class Blog(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     image = models.ImageField(upload_to='blog_images/')
     category = models.CharField(max_length=100, choices=CATEGORY_CHOICES, default='Humor')
+    
+class Comment(models.Model):
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE, related_name='comments')
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    text = models.TextField()
+    created_date = models.DateTimeField(auto_now_add=True)
+    text = RichTextField()

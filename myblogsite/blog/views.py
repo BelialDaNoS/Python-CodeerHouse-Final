@@ -1,7 +1,7 @@
 #"myblogsite\blog\views.py"
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse 
-from .models import Blog
+from .models import Blog, Comment
 from .forms import BlogForm
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
@@ -49,3 +49,13 @@ def blog_delete(request, pk):
         return redirect(reverse('landing'))
     else:
         return HttpResponse("You are not authorized to delete this blog.")
+
+@login_required
+def add_comment_to_blog(request, pk):
+    blog = get_object_or_404(Blog, pk=pk)
+    if request.method == "POST":
+        text = request.POST.get('text')
+        comment = Comment.objects.create(blog=blog, author=request.user, text=text)
+        comment.save()
+        return redirect('blog_detail', pk=blog.pk)
+    return render(request, 'blog/add_comment.html', {'blog': blog})
