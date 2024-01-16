@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, update_session_auth_hash, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordChangeForm
 from django.http import JsonResponse
 from django.contrib.auth.models import User
 from .forms import CustomUserCreationForm, CustomUserChangeForm, CustomPasswordChangeForm
@@ -43,26 +44,28 @@ def profile(request):
 
 @login_required
 def edit_profile(request):
-    user_form = CustomUserChangeForm(request.POST or None, request.FILES or None, instance=request.user)
-    password_form = CustomPasswordChangeForm(user=request.user, data=request.POST or None)
-
     if request.method == 'POST':
+        user_form = CustomUserChangeForm(request.POST, instance=request.user)
+        password_form = PasswordChangeForm(request.user, request.POST)
+        
         if user_form.is_valid():
             user_form.save()
-            messages.success(request, "Perfil actualizado con éxito.")
-            if password_form.is_valid():
-                password_form.save()
-                update_session_auth_hash(request, request.user)  # Importante para no desloguear al usuario
-                messages.success(request, "Contraseña actualizada con éxito.")
-            else:
-                messages.error(request, "Error al actualizar la contraseña.")
-        else:
-            messages.error(request, "Por favor, corrija los errores en el formulario.")
-        
-        return redirect('profile')
+            messages.success(request, 'Tu perfil ha sido actualizado.')
 
-    context = {
+            if password_form.is_valid():
+                user = password_form.save()
+                update_session_auth_hash(request, user)  # Muy importante para mantener la sesión del usuario
+                messages.success(request, 'Tu contraseña ha sido actualizada.')
+            else:
+                messages.error(request, 'Por favor, corrige el error en la contraseña.')
+
+        else:
+            messages.error(request, 'Por favor, corrige los errores en el formulario.')
+    else:
+        user_form = CustomUserChangeForm(instance=request.user)
+        password_form = PasswordChangeForm(request.user)
+
+    return render(request, 'accounts/edit_profile.html', {
         'user_form': user_form,
-        'password_form': password_form,
-    }
-    return render(request, 'accounts/edit_profile.html', context)
+        'password_form': password_form
+    })
