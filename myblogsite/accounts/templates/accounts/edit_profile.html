@@ -1,5 +1,4 @@
-{% load static %}
-{% load i18n %}
+{% load static %} {% load i18n %}
 
 <!DOCTYPE html>
 <html>
@@ -15,20 +14,17 @@
             <label for="username">Nombre de Usuario:</label>
             <input type="text" name="username" id="username" value="{{ user.username }}">
         </div>
-
-
+        
         <div>
             <label for="email">Email:</label>
             <input type="email" name="email" id="email" value="{{ user.email }}">
         </div>
-
-
+        
         <div>
             <label for="description">Descripción:</label>
             <textarea name="description" id="description">{{ user.description }}</textarea>
         </div>
-
-
+        
         <div>
             <label for="profile_image">Foto de Perfil:</label>
             {% if user.profile_image %}
@@ -39,24 +35,36 @@
                 <p style="color: red;">{{ error }}</p>
             {% endfor %}
         </div>
-
+        
         <div>
             <label for="old_password">Contraseña Actual:</label>
-            <input type="password" name="old_password" id="old_password" >
+            <input type="password" name="old_password" id="old_password">
         </div>
         <div>
             <label for="new_password1">Nueva Contraseña:</label>
-            <input type="password" name="new_password1" id="new_password1" >
+            <input type="password" name="new_password1" id="new_password1">
         </div>
         <div>
             <label for="new_password2">Confirmar Nueva Contraseña:</label>
-            <input type="password" name="new_password2" id="new_password2" >
+            <input type="password" name="new_password2" id="new_password2">
         </div>
 
         <!-- Botón para guardar todos los cambios -->
         <button type="submit" name="action" value="update_all">Guardar Cambios</button>
-
     </form>
+    
     <script src="{% static 'js/edit_profile_script.js' %}"></script>
+
+    {% if messages %}
+    <script type="text/javascript">
+        window.onload = function() {
+            {% for message in messages %}
+            {% if message.tags == 'error' and 'El nombre de usuario ya existe' in message.message %}
+                alert("{{ message }}");
+            {% endif %}
+            {% endfor %}
+        };
+    </script>
+    {% endif %}
 </body>
 </html>
