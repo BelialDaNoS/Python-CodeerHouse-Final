@@ -6,6 +6,9 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.contrib.auth.models import User
 from .forms import CustomUserCreationForm, CustomUserChangeForm, CustomPasswordChangeForm
+from .models import CustomUser 
+
+
 
 def ajax_login(request):
     username = request.POST.get('username')
@@ -19,11 +22,9 @@ def ajax_login(request):
         return JsonResponse({"success": False, "error": "Credenciales inválidas."})
 
 def check_username(request):
-    username = request.GET.get('username', None)
-    data = {
-        'is_taken': User.objects.filter(username__iexact=username).exists()
-    }
-    return JsonResponse(data)
+    username = request.GET.get('username')
+    exists = CustomUser.objects.filter(username=username).exists()
+    return JsonResponse({'exists': exists})
 
 def signup(request):
     if request.method == 'POST':
@@ -50,7 +51,7 @@ def edit_profile(request):
         # Verificación del nombre de usuario
         new_username = request.POST.get('username')
         if new_username and new_username != request.user.username:
-            if User.objects.filter(username=new_username).exists():
+            if CustomUser.objects.filter(username=new_username).exists():
                 messages.error(request, 'El nombre de usuario ya existe.')
                 return render(request, 'accounts/edit_profile.html', {
                     'user_form': user_form,

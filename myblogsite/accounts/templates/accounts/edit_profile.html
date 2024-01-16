@@ -54,7 +54,20 @@
     </form>
     
     <script src="{% static 'js/edit_profile_script.js' %}"></script>
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('username').addEventListener('input', function() {
+                var username = this.value;
+                fetch('/ruta/a/check_username?username=' + username)  // Asegúrate de que la URL sea correcta
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.exists) {
+                            alert('El nombre de usuario ya existe.');
+                        }
+                    });
+            });
+        });
+    </script>
     {% if messages %}
     <script type="text/javascript">
         window.onload = function() {
@@ -65,6 +78,7 @@
             {% endfor %}
         };
     </script>
+
     {% endif %}
 </body>
 </html>
