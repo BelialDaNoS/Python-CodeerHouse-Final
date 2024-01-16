@@ -58,27 +58,15 @@
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('username').addEventListener('input', function() {
                 var username = this.value;
-                fetch('/ruta/a/check_username?username=' + username)  // Asegúrate de que la URL sea correcta
+                fetch('/accounts/check_username?username=' + username)
                     .then(response => response.json())
                     .then(data => {
                         if (data.exists) {
-                            alert('El nombre de usuario ya existe.');
+                            alert('El nombre de usuario ya existe. Modificalo o éste no se guardará.');
                         }
                     });
             });
         });
     </script>
-    {% if messages %}
-    <script type="text/javascript">
-        window.onload = function() {
-            {% for message in messages %}
-            {% if message.tags == 'error' and 'El nombre de usuario ya existe' in message.message %}
-                alert("{{ message }}");
-            {% endif %}
-            {% endfor %}
-        };
-    </script>
-
-    {% endif %}
 </body>
 </html>
