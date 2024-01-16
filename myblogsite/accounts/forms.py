@@ -31,8 +31,13 @@ class CustomUserChangeForm(UserChangeForm):
     def clean_profile_image(self):
         profile_image = self.cleaned_data.get('profile_image')
 
-        if profile_image and not profile_image.content_type.startswith('image'):
-            raise ValidationError(_('Solo se permiten archivos de imagen.'))
+        # Si no se ha subido una nueva imagen, simplemente regresa el valor actual
+        if not profile_image:
+            return self.instance.profile_image
+
+        # Asegúrate de que el archivo sea una imagen
+        if not profile_image.name.endswith(('.png', '.jpg', '.jpeg')):
+            raise ValidationError('Solo se admiten archivos en formato .png, .jpg y .jpeg.')
 
         if profile_image and profile_image.size > settings.MAX_UPLOAD_SIZE:
             raise ValidationError(_('El archivo es demasiado grande. Tamaño máximo permitido: %(max_size)s. Tamaño actual: %(current_size)s.') % {
