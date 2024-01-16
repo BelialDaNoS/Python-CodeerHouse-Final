@@ -15,21 +15,18 @@
         <div>
             <label for="username">Nombre de Usuario:</label>
             <input type="text" name="username" id="username" value="{{ user.username }}">
-            <button type="submit" name="action" value="update_username">Actualizar Nombre de Usuario</button>
         </div>
 
         <!-- Actualizar Email -->
         <div>
             <label for="email">Email:</label>
             <input type="email" name="email" id="email" value="{{ user.email }}">
-            <button type="submit" name="action" value="update_email">Actualizar Email</button>
         </div>
 
         <!-- Actualizar Descripción -->
         <div>
             <label for="description">Descripción:</label>
             <textarea name="description" id="description">{{ user.description }}</textarea>
-            <button type="submit" name="action" value="update_description">Actualizar Descripción</button>
         </div>
 
         <!-- Actualizar Foto de Perfil -->
@@ -42,18 +39,16 @@
             {% for error in user_form.profile_image.errors %}
                 <p style="color: red;">{{ error }}</p>
             {% endfor %}
-            <button type="submit" name="action" value="update_image">Actualizar Foto de Perfil</button>
         </div>
 
         <!-- Actualizar Contraseña -->
         <div>
             <label for="password">Nueva Contraseña:</label>
             <input type="password" name="password" id="password">
-            <button type="submit" name="action" value="update_password">Actualizar Contraseña</button>
         </div>
 
         <!-- Botón para guardar todos los cambios -->
-        <button type="submit" name="action" value="update_all">Guardar todos los cambios</button>
+        <button type="submit" name="action" value="update_all">Guardar Cambios</button>
     </form>
 
     <script src="{% static 'js/edit_profile_script.js' %}"></script>

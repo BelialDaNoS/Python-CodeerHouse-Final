@@ -47,31 +47,18 @@ def edit_profile(request):
     password_form = CustomPasswordChangeForm(user=request.user, data=request.POST or None)
 
     if request.method == 'POST':
-        # Bandera para verificar si algún formulario es válido
-        is_form_valid = False
-
-        # Verificar si estamos actualizando la imagen del perfil
-        if 'update_image' in request.POST:
-            if 'profile_image' in request.FILES:
-                user = user_form.save(commit=False)
-                user.profile_image = request.FILES['profile_image']
-                is_form_valid = True
-
-        # Verificar si estamos actualizando la contraseña
-        if 'update_password' in request.POST:
+        if user_form.is_valid():
+            user_form.save()
+            messages.success(request, "Perfil actualizado con éxito.")
             if password_form.is_valid():
                 password_form.save()
-                update_session_auth_hash(request, request.user)
-                is_form_valid = True
-
-        # Si actualizamos todo, o si una de las secciones anteriores es válida, guardar el usuario
-        if 'update_all' in request.POST or is_form_valid:
-            if user_form.is_valid():
-                user_form.save()
-                messages.success(request, "Perfil actualizado con éxito.")
+                update_session_auth_hash(request, request.user)  # Importante para no desloguear al usuario
+                messages.success(request, "Contraseña actualizada con éxito.")
             else:
-                messages.error(request, "Por favor, corrija los errores en el formulario.")
-
+                messages.error(request, "Error al actualizar la contraseña.")
+        else:
+            messages.error(request, "Por favor, corrija los errores en el formulario.")
+        
         return redirect('profile')
 
     context = {

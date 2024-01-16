@@ -53,5 +53,14 @@ class CustomPasswordChangeForm(PasswordChangeForm):
         new_password1 = self.cleaned_data.get('new_password1')
         if old_password and new_password1:
             if old_password == new_password1:
-                raise ValidationError(_("La nueva contraseña no puede ser la misma que la anterior."))
+                raise ValidationError("La nueva contraseña no puede ser la misma que la actual.")
         return new_password1
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        new_password1 = cleaned_data.get("new_password1")
+        new_password2 = cleaned_data.get("new_password2")
+
+        if new_password1 and new_password2:
+            if new_password1 != new_password2:
+                self.add_error('new_password2', "La confirmación de la contraseña no coincide.")
