@@ -3,79 +3,89 @@
 
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>{{ blog.title }}</title>
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link rel="stylesheet" href="{% static 'css/style.css' %}">
-        {{ form.media }}
-        <style>
-            .user-avatar {
-                width: 50px; /* Ajusta el tamaño según sea necesario */
-                height: 50px;
-                border-radius: 50%;
-            }
-            .content {padding: 10px}
-        </style>
+<head>
+    <title>{{ blog.title }}</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {{ form.media }}
+    <style>
+        .user-avatar {
+            width: 50px; /* Ajusta el tamaño según sea necesario */
+            height: 50px;
+            border-radius: 50%;
+        }
+        .contenido {padding: 10px}
+        .blog-content {
+            border: 1px solid #ddd; /* Color y grosor del borde */
+            padding: 15px; /* Espaciado interno */
+            margin-top: 20px; /* Margen superior */
+            background-color: #fff; /* Color de fondo */
+            border-radius: 5px; /* Bordes redondeados */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
+        }
         
-    </head>
-    <body>
-        <header>
-            <div class="container">
-                {% if user.is_authenticated %}
-                    <span class="user-info">
-                    {% if user.profile_image %}
-                        <img src="{{ user.profile_image.url }}" alt="Avatar" class="user-avatar">
-                    {% else %}
-                        <img src="{% static '/avatars/default-avatar.png' %}" alt="Avatar" class="user-avatar">
-                    {% endif %}
-                    {{ user.username }}
-                    </span>
-                    <a href="{% url 'profile' %}" class="header-button">Ver Perfil</a>
-                    <a href="{% url 'logout' %}" class="header-button">Cerrar Sesión</a>
-                    <a href="{% url 'landing' %}" class="header-button">Inicio</a>
-                    <a href="{% url 'blog_list' %}" class="header-button">Lista de Blogs</a>
-                {% else %}
-                    <a href="{% url 'login' %}" class="header-button">Iniciar Sesión</a>
-                    <a href="{% url 'signup' %}" class="header-button">Registrarse</a>
-                {% endif %}
-            </div>
-        </header>
-        <div class="content">
-            <h1>{{ blog.title }}</h1>
-            <button id="toggleContentButton">Mostrar/Ocultar Detalles</button>
+    </style>
+</head>
+<body>
 
-            <!-- Detalles del blog dentro de un div para mostrar/ocultar -->
-            <div id="toggleContent" style="display: none;">
-                <p>{{ blog.subtitle }}</p>
-                <div>{{ blog.body }}</div>
-                <p>Escrito por: {{ blog.author }}</p>
-                <p>Fecha: {{ blog.date }}</p>
-                {% if blog.image %}
-                    <img src="{{ blog.image.url }}" alt="{{ blog.title }}">
-                {% endif %}
-            </div>
 
-        <!-- Sección de comentarios -->
-            <h2>Comentarios</h2>
-            {% for comment in blog.comments.all %}
-                <p>{{ comment.author.username }}: {{ comment.text | safe }}</p>
-            {% endfor %}
-
-        <!-- Formulario para agregar comentario -->
+    <header>
+        <div class="container">
             {% if user.is_authenticated %}
-            <h2>Añadir comentario</h2>
-            <form method="post">
-                {% csrf_token %}
-                {{ form.media }}
-                {{ form.as_p }}
-                <input type="submit" value="Añadir comentario">
-            </form>
+                <span class="user-info">
+                {% if user.profile_image %}
+                    <img src="{{ user.profile_image.url }}" alt="Avatar" class="user-avatar">
+                {% else %}
+                    <img src="{% static '/avatars/default-avatar.png' %}" alt="Avatar" class="user-avatar">
+                {% endif %}
+                {{ user.username }}
+                </span>
+                <a href="{% url 'profile' %}" class="header-button">Ver Perfil</a>
+                <a href="{% url 'logout' %}" class="header-button">Cerrar Sesión</a>
+                <a href="{% url 'landing' %}" class="header-button">Inicio</a>
+                <a href="{% url 'blog_list' %}" class="header-button">Lista de Blogs</a>
             {% else %}
-            <p>Necesitas estar logueado para comentar. <a href="{% url 'login' %}">Iniciar sesión</a></p>
+                <a href="{% url 'login' %}" class="header-button">Iniciar Sesión</a>
+                <a href="{% url 'signup' %}" class="header-button">Registrarse</a>
             {% endif %}
-
-            <a href="{% url 'blog_list' %}">Volver a la lista de blogs</a>
-            <script src="{% static 'js/script.js' %}"></script>
         </div>
-    </body>
+    </header>
+    <div class="contenido">
+        <div class="blog-detail-container">
+            <h1>{{ blog.title }}</h1>
+            <div class="blog-meta">
+                <span class="author">Escrito por: {{ blog.author.username }}</span>
+                <br>
+                <span class="date">Fecha: {{ blog.date|date:"d M Y" }}</span>
+            </div>
+            {% if blog.image %}
+                <img src="{{ blog.image.url }}" alt="{{ blog.title }}" class="blog-image">
+            {% endif %}
+            <div class="blog-content">{{ blog.body|safe }}</div>
+        </div>
+
+            <!-- Sección de comentarios -->
+        <h2>Comentarios</h2>
+
+        {% for comment in blog.comments.all %}
+            <p>{{ comment.author.username }}: {{ comment.text | safe }}</p>
+        {% endfor %}
+
+            <!-- Formulario para agregar comentario -->
+        {% if user.is_authenticated %}
+        <h2>Añadir comentario</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.media }}
+            {{ form.as_p }}
+            <input type="submit" value="Añadir comentario">
+        </form>
+        {% else %}
+        <p>Necesitas estar logueado para comentar. <a href="{% url 'login' %}">Iniciar sesión</a></p>
+        {% endif %}
+
+        <a href="{% url 'blog_list' %}">Volver a la lista de blogs</a>
+    </div>
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
 </html>
