@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'accounts',
     'blog',
     'ckeditor',
-    'debug_toolbar',
 ]
 
 CKEDITOR_UPLOAD_PATH = "uploads/"

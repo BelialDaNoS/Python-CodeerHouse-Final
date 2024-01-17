@@ -66,11 +66,10 @@
 
             <!-- Sección de comentarios -->
         <h2>Comentarios</h2>
-
         {% for comment in blog.comments.all %}
             <p>{{ comment.author.username }}: {{ comment.text | safe }}</p>
         {% endfor %}
-
+        <hr size="8px" color="black" />
             <!-- Formulario para agregar comentario -->
         {% if user.is_authenticated %}
         <h2>Añadir comentario</h2>
