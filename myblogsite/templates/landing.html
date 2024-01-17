@@ -35,6 +35,7 @@
                 {{ user.username }}
                 </span>
                 <a href="{% url 'profile' %}" class="header-button">Ver Perfil</a>
+                <a href="{% url 'blog_list' %}" class="header-button">Lista de Blogs</a>
                 <a href="{% url 'logout' %}" class="header-button">Cerrar Sesión</a>
             {% else %}
                 <a href="{% url 'login' %}" class="header-button">Iniciar Sesión</a>

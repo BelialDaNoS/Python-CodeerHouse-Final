@@ -26,10 +26,10 @@
                 {% endif %}
                 {{ user.username }}
                 </span>
-                <a href="{% url 'profile' %}" class="header-button">Ver Perfil</a>
-                <a href="{% url 'logout' %}" class="header-button">Cerrar Sesión</a>
                 <a href="{% url 'landing' %}" class="header-button">Inicio</a>
+                <a href="{% url 'profile' %}" class="header-button">Ver Perfil</a>
                 <a href="{% url 'blog_list' %}" class="header-button">Lista de Blogs</a>
+                <a href="{% url 'logout' %}" class="header-button">Cerrar Sesión</a>
             {% else %}
                 <a href="{% url 'login' %}" class="header-button">Iniciar Sesión</a>
                 <a href="{% url 'signup' %}" class="header-button">Registrarse</a>

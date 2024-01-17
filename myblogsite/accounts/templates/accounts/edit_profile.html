@@ -51,10 +51,14 @@
 
         <!-- Botón para guardar todos los cambios -->
         <button type="submit" name="action" value="update_all">Guardar Cambios</button>
+        <button type="button" id="cancelButton">Cancelar</button>
     </form>
     
     <script src="{% static 'js/edit_profile_script.js' %}"></script>
     <script>
+        document.getElementById('cancelButton').addEventListener('click', function() {
+            window.location.href = "{% url 'landing' %}";
+        });
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('username').addEventListener('input', function() {
                 var username = this.value;
