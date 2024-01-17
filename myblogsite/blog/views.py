@@ -2,7 +2,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse 
 from .models import Blog, Comment
-from .forms import BlogForm
+from .forms import BlogForm, CommentForm
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 
@@ -14,10 +14,16 @@ def blog_list(request):
 def blog_detail(request, pk):
     blog = get_object_or_404(Blog, pk=pk)
     if request.method == "POST":
-        text = request.POST.get('text')
-        Comment.objects.create(blog=blog, author=request.user, text=text)
-        return redirect('blog_detail', pk=blog.pk)
-    return render(request, 'blog/blog_detail.html', {'blog': blog})
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.blog = blog
+            comment.author = request.user
+            comment.save()
+            return redirect('blog_detail', pk=blog.pk)
+    else:
+        form = CommentForm()
+    return render(request, 'blog/blog_detail.html', {'blog': blog, 'form': form})
 
 
 @login_required

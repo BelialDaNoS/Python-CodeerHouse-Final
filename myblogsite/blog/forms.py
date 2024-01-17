@@ -1,6 +1,6 @@
 #"myblogsite\blog\forms.py"
 from django import forms
-from .models import Blog
+from .models import Blog, Comment
 from ckeditor.widgets import CKEditorWidget
 
 class BlogForm(forms.ModelForm):
@@ -17,3 +17,9 @@ class BlogForm(forms.ModelForm):
             'title': 'Título',
             'category': 'Categoría',
         }
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['text']
