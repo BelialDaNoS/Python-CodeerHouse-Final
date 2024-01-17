@@ -7,6 +7,14 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="{% static 'css/style.css' %}">
         {{ form.media }}
+        <style>
+            .user-avatar {
+                width: 50px; /* Ajusta el tamaño según sea necesario */
+                height: 50px;
+                border-radius: 50%;
+            }
+            .content {padding: 10px}
+        </style>
     </head>
     <body>
         <header>
@@ -30,7 +38,7 @@
                 {% endif %}
             </div>
         </header>
-    <div class="container mt-5">
+    <div class="container mt-5 content">
         <h1>Publicar Blog</h1>
         <form method="post" enctype="multipart/form-data" class="form-group">
             {% csrf_token %}

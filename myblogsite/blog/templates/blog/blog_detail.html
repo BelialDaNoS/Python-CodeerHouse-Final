@@ -8,6 +8,15 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="{% static 'css/style.css' %}">
         {{ form.media }}
+        <style>
+            .user-avatar {
+                width: 50px; /* Ajusta el tamaño según sea necesario */
+                height: 50px;
+                border-radius: 50%;
+            }
+            .content {padding: 10px}
+        </style>
+        
     </head>
     <body>
         <header>
@@ -31,39 +40,41 @@
                 {% endif %}
             </div>
         </header>
-        <h1>{{ blog.title }}</h1>
-        <button id="toggleContentButton">Mostrar/Ocultar Detalles</button>
+        <div class="content">
+            <h1>{{ blog.title }}</h1>
+            <button id="toggleContentButton">Mostrar/Ocultar Detalles</button>
 
-        <!-- Detalles del blog dentro de un div para mostrar/ocultar -->
-        <div id="toggleContent" style="display: none;">
-            <p>{{ blog.subtitle }}</p>
-            <div>{{ blog.body }}</div>
-            <p>Escrito por: {{ blog.author }}</p>
-            <p>Fecha: {{ blog.date }}</p>
-            {% if blog.image %}
-                <img src="{{ blog.image.url }}" alt="{{ blog.title }}">
+            <!-- Detalles del blog dentro de un div para mostrar/ocultar -->
+            <div id="toggleContent" style="display: none;">
+                <p>{{ blog.subtitle }}</p>
+                <div>{{ blog.body }}</div>
+                <p>Escrito por: {{ blog.author }}</p>
+                <p>Fecha: {{ blog.date }}</p>
+                {% if blog.image %}
+                    <img src="{{ blog.image.url }}" alt="{{ blog.title }}">
+                {% endif %}
+            </div>
+
+        <!-- Sección de comentarios -->
+            <h2>Comentarios</h2>
+            {% for comment in blog.comments.all %}
+                <p>{{ comment.author.username }}: {{ comment.text | safe }}</p>
+            {% endfor %}
+
+        <!-- Formulario para agregar comentario -->
+            {% if user.is_authenticated %}
+            <h2>Añadir comentario</h2>
+            <form method="post">
+                {% csrf_token %}
+                <textarea name="text" class="ckeditor" cols="40" rows="10"></textarea><br>
+                <input type="submit" value="Añadir comentario">
+            </form>
+            {% else %}
+            <p>Necesitas estar logueado para comentar. <a href="{% url 'login' %}">Iniciar sesión</a></p>
             {% endif %}
+
+            <a href="{% url 'blog_list' %}">Volver a la lista de blogs</a>
+            <script src="{% static 'js/script.js' %}"></script>
         </div>
-
-      <!-- Sección de comentarios -->
-        <h2>Comentarios</h2>
-        {% for comment in blog.comments.all %}
-            <p>{{ comment.author.username }}: {{ comment.text | safe }}</p>
-        {% endfor %}
-
-     <!-- Formulario para agregar comentario -->
-        {% if user.is_authenticated %}
-        <h2>Añadir comentario</h2>
-        <form method="post">
-            {% csrf_token %}
-            <textarea name="text" class="ckeditor" cols="40" rows="10"></textarea><br>
-            <input type="submit" value="Añadir comentario">
-        </form>
-        {% else %}
-        <p>Necesitas estar logueado para comentar. <a href="{% url 'login' %}">Iniciar sesión</a></p>
-        {% endif %}
-
-        <a href="{% url 'blog_list' %}">Volver a la lista de blogs</a>
-        <script src="{% static 'js/script.js' %}"></script>
     </body>
 </html>
