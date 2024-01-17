@@ -41,3 +41,33 @@ button {
 button:hover {
     background-color: #45a049;
 }
+
+.blog-preview {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    
+    .blog-preview h2 {
+    margin-bottom: 10px;
+    }
+    
+    .blog-preview h2 a {
+    color: #0056b3;
+    text-decoration: none; 
+    }
+    
+    .blog-preview p {
+    color: #666;
+    }
+    
+    .blog-preview button {
+    margin-top: 10px;
+    }
+    
+    .blog-content {
+    margin-top: 15px;
+    }

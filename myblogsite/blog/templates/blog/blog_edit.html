@@ -38,14 +38,14 @@
                 {% endif %}
             </div>
         </header>
-    <div class="container mt-5 content">
-        <h1>Publicar Blog</h1>
-        <form method="post" enctype="multipart/form-data" class="form-group">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Publicar</button>
-        </form>
-        <a href="{% url 'blog_list' %}" class="btn btn-secondary">Cancelar</a>
-    </div>
-</body>
+        <div class="container mt-5 content">
+            <h1>Publicar Blog</h1>
+            <form method="post" enctype="multipart/form-data" class="form-group">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Publicar</button>
+            </form>
+            <a href="{% url 'blog_list' %}" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </body>
 </html>

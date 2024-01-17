@@ -5,16 +5,46 @@
 <html>
 <head>
     <title>Perfil</title>
-    <link rel="stylesheet" href="{% static 'css/accounts_style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        .user-avatar {
+            width: 50px; /* Ajusta el tamaño según sea necesario */
+            height: 50px;
+            border-radius: 50%;
+        }
+        .contenido {padding: 10px}
+    </style>
 </head>
 <body>
-
-<h1>Perfil de {{ user.username }}</h1>
-{% if user.profile_image %}
-    <img src="{{ user.profile_image.url }}" alt="Imagen de Perfil">
-{% endif %}
-<p>Email: {{ user.email }}</p>
-<p>Descripción: {{ user.description }}</p>
-<a href="{% url 'edit_profile' %}">Editar Perfil</a>
+    <header>
+        <div class="container">
+            {% if user.is_authenticated %}
+                <span class="user-info">
+                {% if user.profile_image %}
+                    <img src="{{ user.profile_image.url }}" alt="Avatar" class="user-avatar">
+                {% else %}
+                    <img src="{% static '/avatars/default-avatar.png' %}" alt="Avatar" class="user-avatar">
+                {% endif %}
+                {{ user.username }}
+                </span>
+                <a href="{% url 'profile' %}" class="header-button">Ver Perfil</a>
+                <a href="{% url 'logout' %}" class="header-button">Cerrar Sesión</a>
+                <a href="{% url 'landing' %}" class="header-button">Inicio</a>
+                <a href="{% url 'blog_list' %}" class="header-button">Lista de Blogs</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="header-button">Iniciar Sesión</a>
+                <a href="{% url 'signup' %}" class="header-button">Registrarse</a>
+            {% endif %}
+        </div>
+    </header>
+    <div class="contenido">
+        <h1>Perfil de {{ user.username }}</h1>
+        {% if user.profile_image %}
+            <img src="{{ user.profile_image.url }}" alt="Imagen de Perfil">
+        {% endif %}
+        <p>Email: {{ user.email }}</p>
+        <p>Descripción: {{ user.description }}</p>
+        <a href="{% url 'edit_profile' %}">Editar Perfil</a>
+    </div>
 </body>
 </html>

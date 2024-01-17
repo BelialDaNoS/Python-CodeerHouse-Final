@@ -1,4 +1,3 @@
-<!-- "myblogsite\blog\templates\blog\blog_list.html" -->
 {% load static %}
 
 <!DOCTYPE html>
@@ -6,25 +5,60 @@
 <head>
     <title>Lista de Blogs</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        .user-avatar {
+            width: 50px; /* Ajusta el tamaño según sea necesario */
+            height: 50px;
+            border-radius: 50%;
+        }
+        .content {padding: 10px}
+    </style>
 </head>
 <body>
+    <header>
+        <div class="container">
+            {% if user.is_authenticated %}
+                <span class="user-info">
+                {% if user.profile_image %}
+                    <img src="{{ user.profile_image.url }}" alt="Avatar" class="user-avatar">
+                {% else %}
+                    <img src="{% static '/avatars/default-avatar.png' %}" alt="Avatar" class="user-avatar">
+                {% endif %}
+                {{ user.username }}
+                </span>
+                <a href="{% url 'profile' %}" class="header-button">Ver Perfil</a>
+                <a href="{% url 'logout' %}" class="header-button">Cerrar Sesión</a>
+                <a href="{% url 'landing' %}" class="header-button">Inicio</a>
+                <a href="{% url 'blog_list' %}" class="header-button">Lista de Blogs</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="header-button">Iniciar Sesión</a>
+                <a href="{% url 'signup' %}" class="header-button">Registrarse</a>
+            {% endif %}
+        </div>
+    </header>
     <h1>Lista de Blogs</h1>
-    <button id="toggleContentButton">Mostrar/Ocultar Blogs</button>
 
-    <!-- Lista de blogs dentro de un div para mostrar/ocultar -->
-    <div id="toggleContent">
-        <ul>
-            {% for blog in blogs %}
-                <li>
-                    <a href="{% url 'blog_detail' pk=blog.pk %}">{{ blog.title }}</a>
-                    - Escrito por {{ blog.author }}
-                </li>
-            {% empty %}
-                <li>No hay blogs aún.</li>
-            {% endfor %}
-        </ul>
+    <div class="blog-list-container">
+        {% for blog in blogs %}
+            <div class="blog-preview">
+                <h2><a href="{% url 'blog_detail' pk=blog.pk %}">{{ blog.title }}</a></h2>
+                <p>Escrito por: {{ blog.author }}</p>
+                <button onclick="toggleContent('content-{{ blog.id }}')">Ver Contenido</button>
+                <div id="content-{{ blog.id }}" style="display:none;" class="blog-content">
+                    {{ blog.body|truncatewords:30|safe }}
+                </div>
+            </div>
+        {% empty %}
+            <p>No hay blogs aún.</p>
+        {% endfor %}
     </div>
 
     <script src="{% static 'js/script.js' %}"></script>
+    <script>
+        function toggleContent(id) {
+            var content = document.getElementById(id);
+            content.style.display = content.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
 </body>
 </html>
