@@ -2,13 +2,34 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Publicar Blog</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    {{ form.media }}
-</head>
-<body>
+    <head>
+        <title>{{ blog.title }}</title>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        {{ form.media }}
+    </head>
+    <body>
+        <header>
+            <div class="container">
+                {% if user.is_authenticated %}
+                    <span class="user-info">
+                    {% if user.profile_image %}
+                        <img src="{{ user.profile_image.url }}" alt="Avatar" class="user-avatar">
+                    {% else %}
+                        <img src="{% static '/avatars/default-avatar.png' %}" alt="Avatar" class="user-avatar">
+                    {% endif %}
+                    {{ user.username }}
+                    </span>
+                    <a href="{% url 'profile' %}" class="header-button">Ver Perfil</a>
+                    <a href="{% url 'logout' %}" class="header-button">Cerrar Sesión</a>
+                    <a href="{% url 'landing' %}" class="header-button">Inicio</a>
+                    <a href="{% url 'blog_list' %}" class="header-button">Lista de Blogs</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="header-button">Iniciar Sesión</a>
+                    <a href="{% url 'signup' %}" class="header-button">Registrarse</a>
+                {% endif %}
+            </div>
+        </header>
     <div class="container mt-5">
         <h1>Publicar Blog</h1>
         <form method="post" enctype="multipart/form-data" class="form-group">
