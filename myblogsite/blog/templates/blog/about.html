@@ -2,11 +2,26 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lautaro Gazzo - Sobre Mí</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
+        .no-blogs {
+            text-align: center;
+            margin-top: 110px; /* Ajusta este valor según sea necesario */
+        }
+        .user-avatar, .blog-avatar {
+            width: 50px; /* Ajusta el tamaño según sea necesario */
+            height: 50px;
+            border-radius: 50%;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+        
         body {
             font-family: 'Arial', sans-serif;
             color: #333;
@@ -52,22 +67,16 @@
                 <a href="{% url 'signup' %}" class="header-button">Registrarse</a>
             {% endif %}
         </div>
-
-        <div class="container" id="about-me">
-            <h2>Sobre Mí</h2>
-            <p>Soy <strong>Lautaro Gazzo</strong>, un profesional de TI de Morón, Buenos Aires, especializado en la gestión de proyectos y con un enfoque decidido hacia los resultados. Mi experiencia en roles clave en empresas como <strong>Verifarma</strong> y <strong>SC Johnson</strong> me ha permitido desarrollar soluciones tecnológicas innovadoras y asegurar la satisfacción del cliente con un enfoque personalizado y eficaz.</p>
-            <p>Mi formación técnica incluye programación en <strong>Python</strong> y <strong>JavaScript</strong>, desarrollo web y una amplia gama de herramientas tecnológicas. Soy proactivo, con una comunicación efectiva y un compromiso firme con el trabajo en equipo y la resolución de problemas. Además, soy miembro activo de <strong>Scouts de Argentina</strong>, donde he cultivado valores como la responsabilidad, el respeto y el honor.</p>
-            <p>Te invito a conocer más sobre mi trayectoria y cómo puedo aportar a tu proyecto o empresa.</p>
-            <p class="icon">&#128187; <span style="color: #007bff;">Tecnología</span></p>
-            <p class="icon">&#128218; <span style="color: #28a745;">Conocimiento</span></p>
-            <p class="icon">&#128221; <span style="color: #dc3545;">Innovación</span></p>
-        </div>
     </header>
 
-    <div class="content">
-        <h1>Acerca de mí</h1>
-        <p>Aquí va el resumen del perfil de LinkedIn.</p>
-        <!-- Añadir más contenido y estilos según sea necesario -->
+    <div class="container" id="about-me">
+        <h2>Sobre Mí</h2>
+        <p>Soy <strong>Lautaro Gazzo</strong>, un profesional de TI de Morón, Buenos Aires, especializado en la gestión de proyectos y con un enfoque decidido hacia los resultados. Mi experiencia en roles clave en empresas como <strong>Verifarma</strong> y <strong>SC Johnson</strong> me ha permitido desarrollar soluciones tecnológicas innovadoras y asegurar la satisfacción del cliente con un enfoque personalizado y eficaz.</p>
+        <p>Mi formación técnica incluye programación en <strong>Python</strong> y <strong>JavaScript</strong>, desarrollo web y una amplia gama de herramientas tecnológicas. Soy proactivo, con una comunicación efectiva y un compromiso firme con el trabajo en equipo y la resolución de problemas. Además, soy miembro activo de <strong>Scouts de Argentina</strong>, donde he cultivado valores como la responsabilidad, el respeto y el honor.</p>
+        <p>Te invito a conocer más sobre mi trayectoria y cómo puedo aportar a tu proyecto o empresa.</p>
+        <p class="icon">&#128187; <span style="color: #007bff;">Tecnología</span></p>
+        <p class="icon">&#128218; <span style="color: #28a745;">Conocimiento</span></p>
+        <p class="icon">&#128221; <span style="color: #dc3545;">Innovación</span></p>
     </div>
 </body>
 </html>

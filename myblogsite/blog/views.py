@@ -74,4 +74,5 @@ def add_comment_to_blog(request, pk):
 
 
 def about(request):
-    return render(request, 'about.html')
+    return render(request, 'blog/about.html')
+
