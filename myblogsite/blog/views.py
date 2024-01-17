@@ -71,3 +71,7 @@ def add_comment_to_blog(request, pk):
         comment.save()
         return redirect('blog_detail', pk=blog.pk)
     return render(request, 'blog/add_comment.html', {'blog': blog})
+
+
+def about(request):
+    return render(request, 'about.html')

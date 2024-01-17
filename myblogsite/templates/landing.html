@@ -36,8 +36,10 @@
                 </span>
                 <a href="{% url 'profile' %}" class="header-button">Ver Perfil</a>
                 <a href="{% url 'blog_list' %}" class="header-button">Lista de Blogs</a>
+                <a href="{% url 'about' %}" class="header-button">Acerca de mí</a>
                 <a href="{% url 'logout' %}" class="header-button">Cerrar Sesión</a>
             {% else %}
+                <a href="{% url 'about' %}" class="header-button">Acerca de mí</a>
                 <a href="{% url 'login' %}" class="header-button">Iniciar Sesión</a>
                 <a href="{% url 'signup' %}" class="header-button">Registrarse</a>
             {% endif %}
@@ -65,7 +67,7 @@
                     <img src="{% static 'avatars/default-avatar.png' %}" alt="Avatar" class="user-avatar">
                 {% endif %}
                 <div class="blog-info">
-                    <h2>{{ blog.title }}</h2>
+                    <h2><a href="{% url 'blog_detail' pk=blog.pk %}">{{ blog.title }}</a></h2>
                     {% if blog.author == request.user %}
                     <a href="{% url 'blog_delete' pk=blog.pk %}" title="Eliminar Blog">
                         <i class="material-icons" style="color: red;">delete</i>
