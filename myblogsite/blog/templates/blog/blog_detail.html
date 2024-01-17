@@ -1,4 +1,4 @@
-<!-- "myblogsite\blog\templates\blog\blog_detail.html" -->
+<!-- "myblogsite/blog/templates/blog/blog_detail.html" -->
 {% load static %}
 
 <!DOCTYPE html>
@@ -6,6 +6,7 @@
 <head>
     <title>{{ blog.title }}</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {{ form.media }}
 </head>
 <body>
     <h1>{{ blog.title }}</h1>
@@ -21,6 +22,24 @@
             <img src="{{ blog.image.url }}" alt="{{ blog.title }}">
         {% endif %}
     </div>
+
+    <!-- Sección de comentarios -->
+    <h2>Comentarios</h2>
+    {% for comment in blog.comments.all %}
+        <p>{{ comment.author.username }}: {{ comment.text | safe }}</p>
+    {% endfor %}
+
+    <!-- Formulario para agregar comentario -->
+    {% if user.is_authenticated %}
+    <h2>Añadir comentario</h2>
+    <form method="post">
+        {% csrf_token %}
+        <textarea name="text" class="ckeditor" cols="40" rows="10"></textarea><br>
+        <input type="submit" value="Añadir comentario">
+    </form>
+    {% else %}
+    <p>Necesitas estar logueado para comentar. <a href="{% url 'login' %}">Iniciar sesión</a></p>
+    {% endif %}
 
     <a href="{% url 'blog_list' %}">Volver a la lista de blogs</a>
     <script src="{% static 'js/script.js' %}"></script>
