@@ -19,6 +19,13 @@
             display: flex;
             align-items: center;
         }
+        .blog-content-preview {
+            border: 1px solid #ccc; /* Gris claro */
+            padding: 10px; /* Espacio interior */
+            margin-top: 10px; /* Espacio exterior arriba */
+            border-radius: 5px; /* Bordes redondeados */
+            background-color: #f9f9f9; /* Fondo ligeramente gris para resaltar */
+        }
     </style>
 </head>
 <body>
@@ -71,10 +78,12 @@
                 <span class="author-name">{{ blog.author.username }}</span>
                 <span class="publish-date" style="font-size: smaller;">{{ blog.date|date:"d M Y" }}</span>
                 <!-- Vista previa del contenido del blog -->
-                <p>{{ blog.body|striptags|truncatechars:100 }}</p>
-                {% if blog.body|striptags|length > 100 %}
-                    <a href="{% url 'blog_detail' pk=blog.pk %}">Ver más</a>
-                {% endif %}
+                <div class="blog-content-preview">
+                    <p>{{ blog.body|striptags|truncatechars:100 }}</p>
+                    {% if blog.body|striptags|length > 100 %}
+                        <a href="{% url 'blog_detail' pk=blog.pk %}">Ver más</a>
+                    {% endif %}
+                </div>
                 <!-- Botón de eliminar para superusuarios o autor del blog -->
                 {% if user.is_superuser or blog.author == request.user %}
                     <a href="{% url 'blog_delete' pk=blog.pk %}" title="Eliminar Blog">
