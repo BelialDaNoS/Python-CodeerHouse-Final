@@ -56,11 +56,12 @@ def blog_update(request, pk):
 @login_required
 def blog_delete(request, pk):
     blog = get_object_or_404(Blog, pk=pk)
-    if request.user == blog.author:
+    if request.user == blog.author or request.user.is_superuser:
         blog.delete()
         return redirect(reverse('landing'))
     else:
         return HttpResponse("You are not authorized to delete this blog.")
+
 
 @login_required
 def add_comment_to_blog(request, pk):

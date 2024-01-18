@@ -1,0 +1,46 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página no encontrada</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            {% if user.is_authenticated %}
+                <span class="user-info">
+                {% if user.profile_image %}
+                    <img src="{{ user.profile_image.url }}" alt="Avatar" class="user-avatar">
+                {% else %}
+                    <img src="{% static '/avatars/default-avatar.png' %}" alt="Avatar" class="user-avatar">
+                    <br>
+                {% endif %}
+                {{ user.username }}
+                </span>
+                <a href="{% url 'profile' %}" class="header-button">Ver Perfil</a>
+                <a href="{% url 'blog_list' %}" class="header-button">Lista de Blogs</a>
+                <a href="{% url 'about' %}" class="header-button">Acerca de mí</a>
+                <a href="{% url 'logout' %}" class="header-button">Cerrar Sesión</a>
+            {% else %}
+                <a href="{% url 'about' %}" class="header-button">Acerca de mí</a>
+                <a href="{% url 'login' %}" class="header-button">Iniciar Sesión</a>
+                <a href="{% url 'signup' %}" class="header-button">Registrarse</a>
+            {% endif %}
+        </div>
+    </header>
+    
+    <div class="main-content">
+        <div class="container">
+            <h1>Error 404</h1>
+            <p>La página que buscas no fue creada aún o fue eliminada.</p>
+            <a href="{% url 'landing' %}">Volver a la página principal</a>
+        </div>
+    </div>
+
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

@@ -22,3 +22,6 @@ def publish_blog(request):
     else:
         form = BlogForm()
     return render(request, 'blog/blog_edit.html', {'form': form})
+
+def handler404(request, exception):
+    return render(request, '404.html', status=404)
