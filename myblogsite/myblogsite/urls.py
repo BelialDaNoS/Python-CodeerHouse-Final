@@ -22,6 +22,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 import debug_toolbar
 from django.conf.urls import (handler404, handler500)
+from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
@@ -31,6 +32,7 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/', include('accounts.urls')),
     path('publish-blog/', views.publish_blog, name='publish_blog'),
+    path('logout/', auth_views.LogoutView.as_view(next_page='landing'), name='logout'),
 ]
 
 
