@@ -57,49 +57,42 @@
             </div>
         {% endif %}
     </div>
-
     <div class="blog-container">
         {% for blog in blogs %}
-            <div class="blog-preview">
-                {% if blog.author.profile_image %}
-                    <img src="{{ blog.author.profile_image.url }}" alt="Avatar" class="user-avatar">
-                {% else %}
-                    <img src="{% static 'avatars/default-avatar.png' %}" alt="Avatar" class="user-avatar">
-                {% endif %}
-                <div class="blog-info">
-                    <h2><a href="{% url 'blog_detail' pk=blog.pk %}">{{ blog.title }}</a></h2>
-                    {% if blog.author == request.user %}
-                    <a href="{% url 'blog_delete' pk=blog.pk %}" title="Eliminar Blog">
-                        <i class="material-icons" style="color: red;">delete</i>
-                    </a>
-                    {% endif %}
-                    <button onclick="toggleContent('content-{{ blog.id }}')">Ver Contenido</button>
-                    <div id="content-{{ blog.id }}" style="display:none;">
-                        <p>{{ blog.content }}</p>
-                    </div>
+        <div class="blog-preview">
+            {% if blog.author.profile_image %}
+                <img src="{{ blog.author.profile_image.url }}" alt="Avatar" class="user-avatar">
+            {% else %}
+                <img src="{% static 'avatars/default-avatar.png' %}" alt="Avatar" class="user-avatar">
+            {% endif %}
+            <div class="blog-info">
+                <h2><a href="{% url 'blog_detail' pk=blog.pk %}">{{ blog.title }}</a></h2>
+                <div class="author-info">
+                    <span class="author-name">{{ blog.author.username }}</span>
+                    <span class="publish-date" style="font-size: smaller;">{{ blog.date|date:"d M Y" }}</span>
                 </div>
+                <p>{{ blog.content|slice:":200" }}{% if blog.content|length > 200 %}... <a href="{% url 'blog_detail' pk=blog.pk %}">Ver más</a>{% endif %}</p>
+                
+                {% if user.is_superuser or blog.author == request.user %}
+                <a href="{% url 'blog_delete' pk=blog.pk %}" title="Eliminar Blog">
+                    <i class="material-icons" style="color: red;">delete</i>
+                </a>
+                {% endif %}
             </div>
-            <hr>
-        {% empty %}
-            <div class="no-blogs">
-                <img src="{% static 'travolta-empty.gif' %}" alt="No hay blogs disponibles">
-                <p>No hay blogs aún. ¡Sé el primero!</p>
-            </div>
-        {% endfor %}
+        </div>
+        <hr>
+    {% empty %}
+        <div class="no-blogs">
+            <img src="{% static 'travolta-empty.gif' %}" alt="No hay blogs disponibles">
+            <p>No hay blogs aún. ¡Sé el primero!</p>
+        </div>
+    {% endfor %}
     </div>
-
-
-
     <script src="{% static 'js/publicidad.js' %}"></script>
     <script>
         function showLoginModal() {
             var modal = document.getElementById('login-modal');
             modal.style.display = 'block';
-        }
-        
-        function toggleContent(id) {
-            var content = document.getElementById(id);
-            content.style.display = content.style.display === 'none' ? 'block' : 'none';
         }
     </script>
 
