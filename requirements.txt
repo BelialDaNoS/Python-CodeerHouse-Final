@@ -1,3 +1,0 @@
-Django==3.2.7  # Versión de Django utilizada en el proyecto
-ckeditor==6.1.0  # CKEditor para campos de texto enriquecido
-Pillow==8.3.1  # Para el manejo de imágenes
