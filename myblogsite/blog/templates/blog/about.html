@@ -44,6 +44,10 @@
         .icon {
             color: #007bff;
         }
+
+        .lau{
+            margin-bottom: 50px;
+        }
     </style>
 </head>
 <body>
@@ -59,23 +63,34 @@
                 {% endif %}
                 {{ user.username }}
                 </span>
+                <a href="{% url 'landing' %}" class="header-button">Inicio</a>
                 <a href="{% url 'profile' %}" class="header-button">Ver Perfil</a>
                 <a href="{% url 'blog_list' %}" class="header-button">Lista de Blogs</a>
                 <a href="{% url 'logout' %}" class="header-button">Cerrar Sesión</a>
             {% else %}
+                <a href="{% url 'landing' %}" class="header-button">Inicio</a>
                 <a href="{% url 'login' %}" class="header-button">Iniciar Sesión</a>
                 <a href="{% url 'signup' %}" class="header-button">Registrarse</a>
             {% endif %}
         </div>
     </header>
 
-    <div class="container" id="about-me">
+    <div class="container lau" id="about-me" >
         <h2>Sobre Mí</h2>
         <p>Soy <strong>Lautaro Gazzo</strong>, un profesional de TI de Morón, Buenos Aires, especializado en la gestión de proyectos y con un enfoque decidido hacia los resultados. Mi experiencia en roles clave en empresas como <strong>Verifarma</strong> y <strong>SC Johnson</strong> me ha permitido desarrollar soluciones tecnológicas innovadoras y asegurar la satisfacción del cliente con un enfoque personalizado y eficaz.</p>
         <p>Mi formación técnica incluye programación en <strong>Python</strong> y <strong>JavaScript</strong>, desarrollo web y una amplia gama de herramientas tecnológicas. Soy proactivo, con una comunicación efectiva y un compromiso firme con el trabajo en equipo y la resolución de problemas. Además, soy miembro activo de <strong>Scouts de Argentina</strong>, donde he cultivado valores como la responsabilidad, el respeto y el honor.</p>
         <p class="icon">&#128187; <span style="color: #007bff;">Tecnología</span></p>
         <p class="icon">&#128218; <span style="color: #28a745;">Conocimiento</span></p>
         <p class="icon">&#128221; <span style="color: #dc3545;">Innovación</span></p>
+    </div>
+
+    <div class="container" id="about-me">
+        <h2>Sobre Mí</h2>
+        <p>Soy <strong>Maximiliano Becerra</strong> de Belgrano, CABA. Me especializo en la resolución de errores y tengo experiencia en empresas destacadas como <strong>"Dynasty Store"</strong>, donde desempeñé diversos roles para asegurar su óptimo funcionamiento. Estoy enfocado en el uso de tecnologías como <strong>Python</strong>, <strong>Lua</strong> y <strong>JavaScript</strong>.</p>
+        <p>Valoro el orden y la perfección, esforzándome siempre por cumplir tareas de manera puntual y eficiente. Te invito a explorar mis trabajos y descubrir más sobre mis habilidades y cómo, juntos, podemos alcanzar resultados excepcionales.</p>
+        <p class="icon">&#9881; <span style="color: #007bff;">Tecnología</span></p>
+        <p class="icon">&#9745; <span style="color: #28a745;">Precisión</span></p>
+        <p class="icon">&#128640; <span style="color: #dc3545;">Innovación</span></p>
     </div>
 </body>
 </html>
